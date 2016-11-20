@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_play_screen"
     android:layout_width="match_parent"
@@ -8,6 +9,12 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.uvigo.uvigotelecopsicg08.blackjackqlearning.play_screen">
+    tools:context="com.uvigo.uvigotelecopsicg08.blackjackqlearning.play_screen"
+    android:weightSum="1">
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/c1"
+        android:id="@+id/imageView1"/>
 </RelativeLayout>

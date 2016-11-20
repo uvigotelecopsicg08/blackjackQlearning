@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
 
+import java.util.ArrayList;
+
 public class play_screen extends AppCompatActivity {
 
     @Override
@@ -23,6 +25,16 @@ public class play_screen extends AppCompatActivity {
             else{
                 Toast.makeText(getApplicationContext(),"Continuar con la partida",Toast.LENGTH_LONG).show();
             }
+            /*Jugador agente = new Jugador("Agente");
+            Mazo mazo=new Mazo();
+            mazo.inicializar();
+            mazo.barajar();
+            mazo.darCarta(agente);
+            ArrayList<Carta> cartasJugador= agente.getMano();
+            cartasJugador.get(cartasJugador.size()-1);*/
+
+
+
 
         }
     }

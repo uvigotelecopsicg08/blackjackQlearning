@@ -8,14 +8,13 @@ import java.util.ArrayList;
 
 public class Partida {
     //datos de la partida
-    private boolean jugadorListo, agenteListo; //boolean que indica si el jugador/agente ha tomado una decisión
-    private Jugador entrenador, agente;
-    private JugadorHumano jugador;
-    private Mazo mazo;
-    private int numRondas, rondasJugadas = 0; //numero de rondas por partida
-    private int puntosJugador = 0, puntosAgente = 0; //numero de rondas ganadas
-    private int puntosJugadorRonda = 0, puntosAgenteRonda = 0;
-
+    private static boolean jugadorListo, agenteListo; //boolean que indica si el jugador/agente ha tomado una decisión
+    private static Jugador entrenador, agente;
+    private static JugadorHumano jugador;
+    private static Mazo mazo;
+    private static int numRondas, rondasJugadas=0; //numero de rondas por partida
+    private static int puntosJugador=0, puntosAgente=0; //numero de rondas ganadas
+    private static int puntosJugadorRonda=0, puntosAgenteRonda=0;
     public Partida(){
         jugador = new JugadorHumano("jugador"); //Este jugador seria el interactivo
         agente = new Jugador("agente");
@@ -72,58 +71,60 @@ public class Partida {
         else System.out.println("El agente ha ganado");
     }
 
-    public void RecuentoPuntos() {
-        if (puntosJugadorRonda > puntosAgenteRonda && puntosJugadorRonda <= 21)
+    public static void RecuentoPuntos(){
+        if (puntosJugadorRonda>puntosAgenteRonda && puntosJugadorRonda<=21)
             puntosJugador++;
-        else if (puntosAgenteRonda > puntosJugadorRonda && puntosAgenteRonda <= 21)
+        else if (puntosAgenteRonda>puntosJugadorRonda && puntosAgenteRonda<=21)
             puntosAgente++;
     /*else if(puntosAgenteRonda==puntosJugadorRonda && puntosJugadorRonda<=21)
-	{
-		puntosJugador++;
-		puntosAgente++;
+    {
+        puntosJugador++;
+        puntosAgente++;
 
-	}*/
-        else if (puntosAgenteRonda < 21 && puntosJugadorRonda > 21)
+    }*/
+        else if (puntosAgenteRonda<21 && puntosJugadorRonda>21)
             puntosAgente++;
-        else if (puntosJugadorRonda < 21 && puntosAgenteRonda > 21)
+        else if (puntosJugadorRonda<21 && puntosAgenteRonda>21)
             puntosJugador++;
     }
-
-    public void ActualizarPuntos(Jugador jugador, Jugador agente) {
+    public static void ActualizarPuntos(Jugador jugador, Jugador agente){
         int i;
-        int AuxPuntos = 0;
-        ArrayList<Carta> Aux = jugador.getMano();
-        for (i = 0; i < Aux.size(); i++) {
-            AuxPuntos = AuxPuntos + ValorCartas(Aux.get(i));
+        int AuxPuntos=0;
+        ArrayList<Carta> Aux= jugador.getMano();
+        for(i=0;i<Aux.size();i++){
+            AuxPuntos= AuxPuntos + ValorCartas(Aux.get(i));
 
         }
-        if (AuxPuntos <= 11 && jugador.hasAs())
-            AuxPuntos = AuxPuntos + 10;
+        if (AuxPuntos<=11 && jugador.hasAs())
+            AuxPuntos=AuxPuntos+10;
 
         jugador.setPuntos1(AuxPuntos);
-        puntosJugadorRonda = AuxPuntos;
+        puntosJugadorRonda=AuxPuntos;
         jugador.setManoRival(agente.getMano().size());
-        //	agente.setPuntos2(AuxPuntos);
+        //  agente.setPuntos2(AuxPuntos);
 
-        AuxPuntos = 0;
-        Aux = agente.getMano();
+        AuxPuntos=0;
+        Aux= agente.getMano();
 
-        for (i = 0; i < Aux.size(); i++) {
-            AuxPuntos = AuxPuntos + ValorCartas(Aux.get(i));
+        for(i=0;i<Aux.size();i++){
+            AuxPuntos= AuxPuntos + ValorCartas(Aux.get(i));
 
         }
-        if (AuxPuntos <= 11 && agente.hasAs())
-            AuxPuntos = AuxPuntos + 10;
+        if (AuxPuntos<=11 && agente.hasAs())
+            AuxPuntos=AuxPuntos+10;
 
         agente.setPuntos1(AuxPuntos);
-        puntosAgenteRonda = AuxPuntos;
-        //	jugador.setPuntos2(AuxPuntos);
+        puntosAgenteRonda=AuxPuntos;
+        //  jugador.setPuntos2(AuxPuntos);
 
 
     }
 
 
-    public int ValorCartas(Carta carta) {
+
+
+
+    public static  int ValorCartas(Carta carta){
 
         if (carta.getValor().equals("1"))
             return 1;
@@ -142,12 +143,6 @@ public class Partida {
         else if (carta.getValor().equals("8"))
             return 8;
         if (carta.getValor().equals("9"))
-            return 9;
-        else if (carta.getValor().equals("10"))
-            return 10;
-        if (carta.getValor().equals("jack"))
-            return 8;
-        else if (carta.getValor().equals("reina"))
             return 9;
         else return 10;
     }
@@ -177,5 +172,11 @@ public class Partida {
         }else{
             return true;
         }
+    }
+    public int getPuntosJugadorRonda(){
+        return puntosJugadorRonda;
+    }
+    public int getPuntosAgenteRonda(){
+        return puntosAgenteRonda;
     }
 }

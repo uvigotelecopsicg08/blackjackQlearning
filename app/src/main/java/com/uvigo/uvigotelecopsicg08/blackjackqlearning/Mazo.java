@@ -104,11 +104,14 @@ public class Mazo {
         carta = cartas.get(0);
         jug2.añadirCarta(carta, true);
         cartas.remove(0);
+        jug1.updateAs();
+        jug2.updateAs();
     }
 
     public void darCarta(Jugador jug) {
         Carta carta = cartas.get(0);
         jug.añadirCarta(carta, false);
+        jug.updateAs();
         cartas.remove(0);
     }
 

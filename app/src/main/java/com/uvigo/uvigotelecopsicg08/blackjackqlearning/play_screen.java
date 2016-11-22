@@ -43,7 +43,7 @@ public class play_screen extends AppCompatActivity {
                 ImageView cartaJugador2 = (ImageView) findViewById(R.id.cartaJugador2);
                 ArrayList<Carta> manoJugador = partida.getManoJugador();
                 cartaJugador1.setImageResource(manoJugador.get(0).getCara());
-                cartaJugador2.setImageResource(manoAgente.get(1).getCara());
+                cartaJugador2.setImageResource(manoJugador.get(1).getCara());
 
                 RelativeLayout layout = (RelativeLayout) findViewById(R.id.activity_play_screen);
                 ImageView cartaMazo = (ImageView) findViewById(R.id.cartaMazo);
@@ -130,6 +130,14 @@ public class play_screen extends AppCompatActivity {
         layout.addView(nuevaCartaJugador, viejosParams);
         partida.ActualizarPuntos(partida.getJugador(), partida.getAgente());
         if(partida.findeRonda()){
+            RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(
+                    RelativeLayout.LayoutParams.WRAP_CONTENT,
+                    RelativeLayout.LayoutParams.WRAP_CONTENT);
+            p.addRule(RelativeLayout.CENTER_VERTICAL);
+            TextView mensaje = new TextView(this);
+            mensaje.setText("Agente: "+ partida.getPuntosAgenteRonda()+ " Tú: "+ partida.getPuntosJugadorRonda());
+            mensaje.setLayoutParams(p);
+            layout.addView(mensaje);
             System.out.print("Se acabó la ronda");
             View boton = findViewById(R.id.hitButton);
             boton.setEnabled(false);

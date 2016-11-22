@@ -10,11 +10,78 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.uvigo.uvigotelecopsicg08.blackjackqlearning.play_screen"
-    android:weightSum="1">
+    android:weightSum="1"
+    android:background="@android:color/holo_green_dark">
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/c1"
-        android:id="@+id/imageView1"/>
+        app:srcCompat="@drawable/back"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:id="@+id/cartaAgente1" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/back"
+        android:id="@+id/cartaAgente2"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/cartaAgente1"
+        android:layout_toEndOf="@+id/cartaAgente1"
+        android:layout_marginLeft="13dp"
+        android:layout_marginStart="13dp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/back"
+        android:id="@+id/cartaMazo"
+        android:layout_below="@+id/cartaAgente2"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="67dp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/back"
+        android:id="@+id/cartaJugador2"
+        android:layout_alignTop="@+id/cartaJugador1"
+        android:layout_alignLeft="@+id/cartaAgente2"
+        android:layout_alignStart="@+id/cartaAgente2" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/back"
+        android:id="@+id/cartaJugador1"
+        android:layout_above="@+id/standButton"
+        android:layout_alignLeft="@+id/cartaAgente1"
+        android:layout_alignStart="@+id/cartaAgente1"
+        android:layout_marginBottom="28dp" />
+
+    <Button
+        android:text="Stand"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/standButton"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/cartaJugador2"
+        android:layout_alignEnd="@+id/cartaJugador2"
+        android:layout_marginRight="28dp"
+        android:layout_marginEnd="28dp" />
+
+    <Button
+        android:text="hit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="24dp"
+        android:layout_marginStart="24dp"
+        android:id="@+id/hitButton"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/cartaJugador2"
+        android:layout_toEndOf="@+id/cartaJugador2"
+        android:onClick="onClickHit" />
+
 </RelativeLayout>

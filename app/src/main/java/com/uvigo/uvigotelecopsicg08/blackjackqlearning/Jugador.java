@@ -1,5 +1,7 @@
 package com.uvigo.uvigotelecopsicg08.blackjackqlearning;
+
 import java.util.ArrayList;
+
 /**
  * Created by Juani on 20/11/2016.
  */
@@ -11,9 +13,18 @@ public class Jugador {
     private ArrayList<Carta> mano = new ArrayList<Carta>();
     private boolean as = false; //boolean que indica si el jugador tiene as
     private boolean plantado = false; //boolean que indica si el jugador está plantado
+    private int ManoRival;
 
     public Jugador(String nombre) {
         this.nombre = nombre;
+    }
+
+    public int getManoRival() {
+        return ManoRival;
+    }
+
+    public void setManoRival(int manoRival) {
+        ManoRival = manoRival;
     }
 
     public String getNombre() {
@@ -38,6 +49,14 @@ public class Jugador {
 
     public int getPuntos2() {
         return puntos2;
+    }
+
+    public void setPuntos1(int puntos1) {
+        this.puntos1 = puntos1;
+    }
+
+    public void setPuntos2(int puntos2) {
+        this.puntos2 = puntos2;
     }
 
     public boolean isPlantado() {
@@ -81,5 +100,18 @@ public class Jugador {
 
     public void plantarse() {
         plantado = true;
+    }
+
+    public boolean HacerJugada(Mazo mazo) {
+    /*Definimos la jugada del jugador, para ello antes tendremos que actualizar en la partida tanto
+		sus puntos como los del contrario*/
+	/*En el jugador definiremos al jugador estandard que cada vez que tenga el 16 se planta*/
+        if (puntos1 < 16) {
+            pedirCarta(mazo);
+            return true;
+        } else {
+            plantarse();
+            return false;
+        }
     }
 }

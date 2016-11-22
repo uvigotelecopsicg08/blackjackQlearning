@@ -31,34 +31,33 @@
         android:id="@+id/buttonQuit" />
 
     <Button
-        android:text="Settings"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="70dp"
-        android:id="@+id/buttonSettings"
-        android:layout_below="@+id/buttonContinue"
-        android:layout_toEndOf="@+id/buttonNewPlay"
-        android:layout_toRightOf="@+id/buttonNewPlay" />
-
-    <Button
-        android:text="Continue Game"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/buttonContinue"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/buttonSettings"
-        android:layout_toEndOf="@+id/buttonSettings"
-        android:layout_marginTop="30dp" />
-
-    <Button
         android:text="New Play"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/buttonNewPlay"
         android:layout_marginLeft="34dp"
         android:layout_marginStart="34dp"
-        android:layout_alignBaseline="@+id/buttonContinue"
-        android:layout_alignBottom="@+id/buttonContinue"
+        android:layout_alignTop="@+id/buttonContinue"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
+    <Button
+        android:text="Settings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:id="@+id/buttonSettings"
+        android:layout_below="@+id/buttonContinue"
+        android:layout_toRightOf="@+id/buttonNewPlay"
+        android:layout_toEndOf="@+id/buttonNewPlay" />
+
+    <Button
+        android:text="Continue Game"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonContinue"
+        android:layout_marginTop="34dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 </RelativeLayout>

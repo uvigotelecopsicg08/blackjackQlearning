@@ -9,7 +9,18 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
-
+import android.content.Context;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 
 public class play_screen extends AppCompatActivity {
@@ -20,6 +31,8 @@ public class play_screen extends AppCompatActivity {
     ArrayList<ImageView> cartasPedidasAgente = null;
     boolean rondaAcabada = false;
     TextView mensajeFinRonda;
+    ArrayList<Carta> manoAgente=null;
+    int opcion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +43,7 @@ public class play_screen extends AppCompatActivity {
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         if (extras != null) {
-            int opcion = extras.getInt("OPCION");
+             opcion = extras.getInt("OPCION");
             if (opcion == 0) {
                 Toast.makeText(getApplicationContext(), "Iniciar nueva partida", Toast.LENGTH_LONG).show();
                 partida = new Partida();
@@ -38,7 +51,7 @@ public class play_screen extends AppCompatActivity {
 
                 ImageView cartaAgente1 = (ImageView) findViewById(R.id.cartaAgente1);
                 ImageView cartaAgente2 = (ImageView) findViewById(R.id.cartaAgente2);
-                ArrayList<Carta> manoAgente = partida.getManoAgente();
+                 manoAgente = partida.getManoAgente();
                 cartaAgente1.setImageResource(manoAgente.get(0).getCara());
                 cartaAgente2.setImageResource(manoAgente.get(1).getCara());
                 ImageView cartaJugador1 = (ImageView) findViewById(R.id.cartaJugador1);
@@ -61,25 +74,72 @@ public class play_screen extends AppCompatActivity {
 
             } else {
                 Toast.makeText(getApplicationContext(), "Continuar con la partida", Toast.LENGTH_LONG).show();
+                manoAgente=new ArrayList<Carta>();
+              ImageView cartaAgente1 = (ImageView) findViewById(R.id.cartaAgente1);
+                ImageView cartaAgente2 = (ImageView) findViewById(R.id.cartaAgente2);
+                partida =(Partida) loadSerializedObject();
+                manoAgente = partida.getManoAgente();
+                cartaAgente1.setImageResource(manoAgente.get(0).getCara());
+                cartaAgente2.setImageResource(manoAgente.get(1).getCara());
+
+                ImageView cartaJugador1 = (ImageView) findViewById(R.id.cartaJugador1);
+                ImageView cartaJugador2 = (ImageView) findViewById(R.id.cartaJugador2);
+                ArrayList<Carta> manoJugador = partida.getManoJugador();
+                cartaJugador1.setImageResource(manoJugador.get(0).getCara());
+                cartaJugador2.setImageResource(manoJugador.get(1).getCara());
+
+                RelativeLayout layout = (RelativeLayout) findViewById(R.id.activity_play_screen);
+                ImageView cartaMazo = (ImageView) findViewById(R.id.cartaMazo);
+                RelativeLayout.LayoutParams paramsMazo = (RelativeLayout.LayoutParams) cartaMazo.getLayoutParams();
+                nuevaCartaJugador = new ImageView(this);
+                nuevaCartaJugador.setImageResource(R.drawable.back);
+                layout.addView(nuevaCartaJugador, paramsMazo);
+                nuevaCartaAgente = new ImageView(this);
+                nuevaCartaAgente.setImageResource(R.drawable.back);
+                layout.addView(nuevaCartaAgente, paramsMazo);
+                cartasPedidasJugador = new ArrayList<ImageView>();
+                cartasPedidasAgente = new ArrayList<ImageView>();
+                for(int i=2;i<manoJugador.size()&&manoJugador.size()>2;i++){
+                    RelativeLayout.LayoutParams viejosParams = (RelativeLayout.LayoutParams) nuevaCartaJugador.getLayoutParams();
+                    RelativeLayout.LayoutParams nuevosParams = new RelativeLayout.LayoutParams(
+                            RelativeLayout.LayoutParams.WRAP_CONTENT,
+                            RelativeLayout.LayoutParams.WRAP_CONTENT);
+                    if (cartasPedidasJugador.isEmpty()) {
+                        nuevosParams.addRule(RelativeLayout.RIGHT_OF, R.id.cartaJugador2);
+
+                    } else {
+                        nuevosParams.addRule(RelativeLayout.RIGHT_OF, cartasPedidasJugador.get(cartasPedidasJugador.size() - 1).getId());
+                    }
+                    nuevosParams.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.cartaJugador1);
+                    nuevosParams.setMargins(45, 0, 0, 0);
+                    nuevaCartaJugador.setLayoutParams(nuevosParams);
+                    nuevaCartaJugador.setImageResource(partida.getManoJugador().get(i).getCara());  // Cambio de codigo con respecto el de gabri
+                    nuevaCartaJugador.setId(View.generateViewId());
+                    cartasPedidasJugador.add(nuevaCartaJugador);
+                    nuevaCartaJugador = new ImageView(this);
+                    nuevaCartaJugador.setImageResource(R.drawable.back);
+                    layout.addView(nuevaCartaJugador, viejosParams);
+                }
+                for(int i=2;i<manoAgente.size()&&manoJugador.size()>2;i++){
+                    RelativeLayout.LayoutParams viejosParams = (RelativeLayout.LayoutParams) nuevaCartaAgente.getLayoutParams();
+                    RelativeLayout.LayoutParams nuevosParams = new RelativeLayout.LayoutParams(
+                            RelativeLayout.LayoutParams.WRAP_CONTENT,
+                            RelativeLayout.LayoutParams.WRAP_CONTENT);
+                    if (cartasPedidasAgente.isEmpty()) {
+                        nuevosParams.addRule(RelativeLayout.RIGHT_OF, R.id.cartaAgente2);
+                    } else {
+                        nuevosParams.addRule(RelativeLayout.RIGHT_OF, cartasPedidasAgente.get(i).getId());
+                    }
+                    nuevosParams.setMargins(50, 0, 0, 0);
+                    nuevaCartaAgente.setLayoutParams(nuevosParams);
+                    nuevaCartaAgente.setId(View.generateViewId());
+                    cartasPedidasAgente.add(nuevaCartaAgente);
+                    nuevaCartaAgente = new ImageView(this);
+                    nuevaCartaAgente.setImageResource(R.drawable.back);
+                    layout.addView(nuevaCartaAgente, viejosParams);
+                }
             }
-            /*Jugador agente = new Jugador("Agente");
-            Mazo mazo=new Mazo();
-            mazo.inicializar();
-            mazo.barajar();
-            mazo.darCarta(agente);
-            ArrayList<Carta> cartasJugador= agente.getMano();
-            cartasJugador.get(cartasJugador.size()-1);*/
 
-            /*RelativeLayout layout = (RelativeLayout) findViewById(R.id.activity_play_screen);
-            ImageView nuevaImagen = new ImageView(this);
-            nuevaImagen.setImageResource(R.drawable.back);
-
-            RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(
-                    RelativeLayout.LayoutParams.WRAP_CONTENT,
-                    RelativeLayout.LayoutParams.WRAP_CONTENT);
-            lp.addRule(RelativeLayout.RIGHT_OF, cartaAgente2.getId());
-            lp.setMargins(45, 0, 0 ,0);
-            layout.addView(nuevaImagen, lp);*/
 
 
         }
@@ -228,5 +288,72 @@ public class play_screen extends AppCompatActivity {
             nuevaRonda();
         }
         return super.onTouchEvent(event);
+    }
+
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+    }
+    @Override
+
+    protected void onStart(){
+        super.onStop();
+
+    }
+   protected void onStop(){
+        super.onStop();
+
+   }
+    protected void onPause(){
+        super.onPause();
+        saveObject(partida);
+
+    }
+    @Override
+    protected void onResume(){
+        super.onResume();
+
+    }
+    protected void onRestart(){
+        super.onRestart();
+
+    }
+
+    public void saveObject(Partida p){
+        try
+        {    Context context=getApplicationContext();
+            ObjectOutputStream oos = new ObjectOutputStream(context.openFileOutput("partida.txt", Context.MODE_PRIVATE)); //Select where you wish to save the file...
+            oos.writeObject(p); // write the class as an 'object'
+            oos.flush(); // flush the stream to insure all of the information was written to 'save_object.bin'
+            oos.close();// close the stream
+        }
+        catch(Exception ex)
+        {
+
+            ex.printStackTrace();
+        }
+    }
+
+    public Object loadSerializedObject()
+    {
+        try
+        {    Context context = getApplicationContext();
+            ObjectInputStream ois = new ObjectInputStream(context.openFileInput("partida.txt"));
+            Object o = ois.readObject();
+            return o;
+        }
+        catch(Exception ex)
+        {
+
+            ex.printStackTrace();
+        }
+        return null;
     }
 }

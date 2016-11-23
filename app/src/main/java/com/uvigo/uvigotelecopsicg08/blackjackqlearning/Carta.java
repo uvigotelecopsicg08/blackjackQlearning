@@ -1,10 +1,13 @@
 package com.uvigo.uvigotelecopsicg08.blackjackqlearning;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by Juani on 20/11/2016.
  */
 
-public class Carta {
+public class Carta   {
 
     private String palo; //diamantes, corazones, picas, treboles
     private String valor; //1, 2, 3... 10, jack, reina, rey
@@ -48,5 +51,10 @@ public class Carta {
 
     public void setVisible(boolean visible) {
         this.visible = visible;
+    }
+
+    @Override
+    public String toString() {
+        return palo+"-"+valor+"-"+cara+"-"+visible+":";
     }
 }

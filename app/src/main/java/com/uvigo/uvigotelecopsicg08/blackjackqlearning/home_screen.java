@@ -6,8 +6,11 @@ import android.widget.Button;
 import android.view.View;
 
 import android.content.Intent;
+import android.widget.Toast;
+
 public class home_screen extends AppCompatActivity  implements View.OnClickListener  {
     Button buttonNewPlay,buttonContinue,buttonQuit,buttonScores,buttonSetings;
+    boolean partidaIniciada=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,15 +33,21 @@ public class home_screen extends AppCompatActivity  implements View.OnClickListe
             case R.id.buttonNewPlay:
                 // Toast.makeText(getApplicationContext(),"prueba fenomeno",Toast.LENGTH_LONG).show();
                  opcion = 0;
+                partidaIniciada=true;
                  intent =new Intent(home_screen.this,play_screen.class);
                 intent.putExtra("OPCION",opcion);
                 startActivity(intent);
                 break;
             case R.id.buttonContinue:
-                 opcion = 1;
-                 intent =new Intent(home_screen.this,play_screen.class);
-               intent.putExtra("OPCION",opcion);
-                startActivity(intent);
+                if(partidaIniciada) {
+                    opcion = 1;
+                    intent = new Intent(home_screen.this, play_screen.class);
+                    intent.putExtra("OPCION", opcion);
+                    startActivity(intent);
+                }
+                else{
+                    Toast.makeText(getApplicationContext(), "No hay partida iniciada", Toast.LENGTH_LONG).show();
+                }
                 break;
             case R.id.buttonScores:
                 intent =new Intent(home_screen.this,scores_screen .class);

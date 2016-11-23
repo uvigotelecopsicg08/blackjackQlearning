@@ -2,11 +2,13 @@ package com.uvigo.uvigotelecopsicg08.blackjackqlearning;
 
 import java.util.ArrayList;
 
+import java.io.Serializable;
+
 /**
  * Created by Juani on 20/11/2016.
  */
 
-public class Partida {
+public class Partida implements Serializable{
     //datos de la partida
     private static boolean jugadorListo, agenteListo; //boolean que indica si el jugador/agente ha tomado una decisión
     private static Jugador entrenador, agente;

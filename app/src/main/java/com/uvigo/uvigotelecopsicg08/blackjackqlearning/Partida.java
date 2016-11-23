@@ -12,17 +12,18 @@ public class Partida {
     private static Jugador entrenador, agente;
     private static JugadorHumano jugador;
     private static Mazo mazo;
-    private static int numRondas, rondasJugadas=0; //numero de rondas por partida
-    private static int puntosJugador=0, puntosAgente=0; //numero de rondas ganadas
-    private static int puntosJugadorRonda=0, puntosAgenteRonda=0;
-    public Partida(){
+    private static int numRondas, rondasJugadas = 0; //numero de rondas por partida
+    private static int puntosJugador = 0, puntosAgente = 0; //numero de rondas ganadas
+    private static int puntosJugadorRonda = 0, puntosAgenteRonda = 0;
+
+    public Partida() {
         jugador = new JugadorHumano("jugador"); //Este jugador seria el interactivo
         agente = new Jugador("agente");
         numRondas = 10;
         mazo = new Mazo();
     }
 
-    public void nuevaRonda(){
+    public void nuevaRonda() {
         puntosJugadorRonda = 0;
         puntosAgenteRonda = 0;
         mazo.inicializar();
@@ -33,6 +34,7 @@ public class Partida {
         jugador.setPuntos2(puntosAgenteRonda);
 
     }
+
     public void main(String[] args) {
         //inicializamos partida
 //		jugador = new Jugador("jugador"); //Esta Jugador es el basico con el behavioral basico
@@ -71,10 +73,10 @@ public class Partida {
         else System.out.println("El agente ha ganado");
     }
 
-    public static void RecuentoPuntos(){
-        if (puntosJugadorRonda>puntosAgenteRonda && puntosJugadorRonda<=21)
+    public static void RecuentoPuntos() {
+        if (puntosJugadorRonda > puntosAgenteRonda && puntosJugadorRonda <= 21)
             puntosJugador++;
-        else if (puntosAgenteRonda>puntosJugadorRonda && puntosAgenteRonda<=21)
+        else if (puntosAgenteRonda > puntosJugadorRonda && puntosAgenteRonda <= 21)
             puntosAgente++;
     /*else if(puntosAgenteRonda==puntosJugadorRonda && puntosJugadorRonda<=21)
     {
@@ -82,49 +84,47 @@ public class Partida {
         puntosAgente++;
 
     }*/
-        else if (puntosAgenteRonda<21 && puntosJugadorRonda>21)
+        else if (puntosAgenteRonda < 21 && puntosJugadorRonda > 21)
             puntosAgente++;
-        else if (puntosJugadorRonda<21 && puntosAgenteRonda>21)
+        else if (puntosJugadorRonda < 21 && puntosAgenteRonda > 21)
             puntosJugador++;
     }
-    public static void ActualizarPuntos(Jugador jugador, Jugador agente){
+
+    public static void ActualizarPuntos(Jugador jugador, Jugador agente) {
         int i;
-        int AuxPuntos=0;
-        ArrayList<Carta> Aux= jugador.getMano();
-        for(i=0;i<Aux.size();i++){
-            AuxPuntos= AuxPuntos + ValorCartas(Aux.get(i));
+        int AuxPuntos = 0;
+        ArrayList<Carta> Aux = jugador.getMano();
+        for (i = 0; i < Aux.size(); i++) {
+            AuxPuntos = AuxPuntos + ValorCartas(Aux.get(i));
 
         }
-        if (AuxPuntos<=11 && jugador.hasAs())
-            AuxPuntos=AuxPuntos+10;
+        if (AuxPuntos <= 11 && jugador.hasAs())
+            AuxPuntos = AuxPuntos + 10;
 
         jugador.setPuntos1(AuxPuntos);
-        puntosJugadorRonda=AuxPuntos;
+        puntosJugadorRonda = AuxPuntos;
         jugador.setManoRival(agente.getMano().size());
         //  agente.setPuntos2(AuxPuntos);
 
-        AuxPuntos=0;
-        Aux= agente.getMano();
+        AuxPuntos = 0;
+        Aux = agente.getMano();
 
-        for(i=0;i<Aux.size();i++){
-            AuxPuntos= AuxPuntos + ValorCartas(Aux.get(i));
+        for (i = 0; i < Aux.size(); i++) {
+            AuxPuntos = AuxPuntos + ValorCartas(Aux.get(i));
 
         }
-        if (AuxPuntos<=11 && agente.hasAs())
-            AuxPuntos=AuxPuntos+10;
+        if (AuxPuntos <= 11 && agente.hasAs())
+            AuxPuntos = AuxPuntos + 10;
 
         agente.setPuntos1(AuxPuntos);
-        puntosAgenteRonda=AuxPuntos;
+        puntosAgenteRonda = AuxPuntos;
         //  jugador.setPuntos2(AuxPuntos);
 
 
     }
 
 
-
-
-
-    public static  int ValorCartas(Carta carta){
+    public static int ValorCartas(Carta carta) {
 
         if (carta.getValor().equals("1"))
             return 1;
@@ -147,36 +147,44 @@ public class Partida {
         else return 10;
     }
 
-    public Jugador getAgente(){
+    public Jugador getAgente() {
         return agente;
     }
-    public Jugador getJugador(){
+
+    public Jugador getJugador() {
         return jugador;
     }
 
-    public ArrayList<Carta> getManoAgente(){
+    public ArrayList<Carta> getManoAgente() {
         return agente.getMano();
     }
-    public ArrayList<Carta> getManoJugador(){
+
+    public ArrayList<Carta> getManoJugador() {
         return jugador.getMano();
     }
-    public boolean jugadaAgente(){
+
+    public boolean jugadaAgente() {
         return agente.HacerJugada(mazo);
     }
-    public void pedirJugador(){
+
+    public void pedirJugador() {
         jugador.pedirCarta(mazo);
     }
-    public boolean findeRonda(){
-        if(puntosJugadorRonda < 21 && puntosAgenteRonda < 21 && !(agente.isPlantado() && jugador.isPlantado())){
+
+    public boolean findeRonda() {
+        if (puntosJugadorRonda < 21 && puntosAgenteRonda < 21 && !(agente.isPlantado() && jugador.isPlantado())) {
             return false;
-        }else{
+        } else {
             return true;
         }
     }
-    public int getPuntosJugadorRonda(){
+
+    public int getPuntosJugadorRonda() {
         return puntosJugadorRonda;
     }
-    public int getPuntosAgenteRonda(){
+
+    public int getPuntosAgenteRonda() {
         return puntosAgenteRonda;
     }
+
 }

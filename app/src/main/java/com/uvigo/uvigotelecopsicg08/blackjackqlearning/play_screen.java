@@ -2,6 +2,7 @@ package com.uvigo.uvigotelecopsicg08.blackjackqlearning;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.widget.*;
 import android.content.Context;
 
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
@@ -29,8 +31,8 @@ public class play_screen extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_play_screen);
-
+        this.setContentView(R.layout.activity_play_screen);
+        View v= (View) findViewById(R.id.activity_play_screen);
 
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
@@ -39,6 +41,7 @@ public class play_screen extends AppCompatActivity {
             if (opcion == 0) {
                 Toast.makeText(getApplicationContext(), "Iniciar nueva partida", Toast.LENGTH_LONG).show();
                 partida = new Partida();
+                loadParameters(partida,v);
                 partida.nuevaRonda();
 
                 ImageView cartaAgente1 = (ImageView) findViewById(R.id.cartaAgente1);
@@ -65,6 +68,7 @@ public class play_screen extends AppCompatActivity {
                 cartasPedidasAgente = new ArrayList<ImageView>();
 
             } else {
+                loadParameters(partida,v);
                 Toast.makeText(getApplicationContext(), "Continuar con la partida", Toast.LENGTH_LONG).show();
                 manoAgente = new ArrayList<Carta>();
                 ImageView cartaAgente1 = (ImageView) findViewById(R.id.cartaAgente1);
@@ -423,5 +427,33 @@ public class play_screen extends AppCompatActivity {
         }
         return null;
     }
+    public void  loadParameters(Partida p,View v){
+        try{
+            Context context = getApplicationContext();
+            ObjectInputStream ois = new ObjectInputStream(context.openFileInput("parameters.txt"));
+           Parameters parameters =(Parameters) ois.readObject();
+            System.out.println("Ya hay parametros");
+            partida.setNumRondas(parameters.getNumRondas());
+            if(parameters.getColor().equals("Rojo")) {
+                v.setBackgroundColor(Color.RED);
+            }
+            else if (parameters.getColor().equals("Verde")){
+                v.setBackgroundColor(Color.GREEN);
+            }
+            else if (parameters.getColor().equals("Amarillo")){
+                v.setBackgroundColor(Color.YELLOW);
+            }
+            else if (parameters.getColor().equals("Negro")){
+                v.setBackgroundColor(Color.BLACK);
+            }
+            else if (parameters.getColor().equals("Blanco")){
+                v.setBackgroundColor(Color.WHITE);
+            }
 
+        }catch (IOException e){
+            System.out.println("No hay parametros");
+        } catch (ClassNotFoundException e) {
+            System.out.println("No hay parametros");
+        }
+    }
 }

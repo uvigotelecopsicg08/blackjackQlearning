@@ -14,6 +14,15 @@ public class Partida implements Serializable {
     private static Jugador entrenador, agente;
     private static JugadorHumano jugador;
     private static Mazo mazo;
+
+    public static int getNumRondas() {
+        return numRondas;
+    }
+
+    public static void setNumRondas(int numRondas) {
+        Partida.numRondas = numRondas;
+    }
+
     private static int numRondas, rondasJugadas = 0; //numero de rondas por partida
     private static int puntosJugador = 0, puntosAgente = 0; //numero de rondas ganadas
     private static int puntosJugadorRonda = 0, puntosAgenteRonda = 0;

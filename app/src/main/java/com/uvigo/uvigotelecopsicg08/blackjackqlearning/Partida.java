@@ -10,13 +10,13 @@ import java.io.Serializable;
 
 public class Partida implements Serializable {
     //datos de la partida
-    private boolean jugadorListo, agenteListo; //boolean que indica si el jugador/agente ha tomado una decisión
-    private Jugador entrenador, agente;
-    private JugadorHumano jugador;
-    private Mazo mazo;
-    private int numRondas, rondasJugadas = 0; //numero de rondas por partida
-    private int puntosJugador = 0, puntosAgente = 0; //numero de rondas ganadas
-    private int puntosJugadorRonda = 0, puntosAgenteRonda = 0;
+    private static boolean jugadorListo, agenteListo; //boolean que indica si el jugador/agente ha tomado una decisión
+    private static Jugador entrenador, agente;
+    private static JugadorHumano jugador;
+    private static Mazo mazo;
+    private static int numRondas, rondasJugadas = 0; //numero de rondas por partida
+    private static int puntosJugador = 0, puntosAgente = 0; //numero de rondas ganadas
+    private static int puntosJugadorRonda = 0, puntosAgenteRonda = 0;
 
     public Partida() {
         jugador = new JugadorHumano("jugador"); //Este jugador seria el interactivo

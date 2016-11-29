@@ -8,15 +8,15 @@ import java.io.Serializable;
  * Created by Juani on 20/11/2016.
  */
 
-public class Partida implements Serializable{
+public class Partida implements Serializable {
     //datos de la partida
-    private static boolean jugadorListo, agenteListo; //boolean que indica si el jugador/agente ha tomado una decisión
-    private static Jugador entrenador, agente;
-    private static JugadorHumano jugador;
-    private static Mazo mazo;
-    private static int numRondas, rondasJugadas = 0; //numero de rondas por partida
-    private static int puntosJugador = 0, puntosAgente = 0; //numero de rondas ganadas
-    private static int puntosJugadorRonda = 0, puntosAgenteRonda = 0;
+    private boolean jugadorListo, agenteListo; //boolean que indica si el jugador/agente ha tomado una decisión
+    private Jugador entrenador, agente;
+    private JugadorHumano jugador;
+    private Mazo mazo;
+    private int numRondas, rondasJugadas = 0; //numero de rondas por partida
+    private int puntosJugador = 0, puntosAgente = 0; //numero de rondas ganadas
+    private int puntosJugadorRonda = 0, puntosAgenteRonda = 0;
 
     public Partida() {
         jugador = new JugadorHumano("jugador"); //Este jugador seria el interactivo
@@ -62,7 +62,7 @@ public class Partida implements Serializable{
                 ActualizarPuntos(jugador, agente);
             }
             System.out.println("Jugador=" + puntosJugadorRonda + "Agente=" + puntosAgenteRonda);
-            RecuentoPuntos();
+            recuentoPuntos();
             rondasJugadas++;
 
         }
@@ -75,7 +75,7 @@ public class Partida implements Serializable{
         else System.out.println("El agente ha ganado");
     }
 
-    public static void RecuentoPuntos() {
+    public void recuentoPuntos() {
         if (puntosJugadorRonda > puntosAgenteRonda && puntosJugadorRonda <= 21)
             puntosJugador++;
         else if (puntosAgenteRonda > puntosJugadorRonda && puntosAgenteRonda <= 21)
@@ -92,7 +92,7 @@ public class Partida implements Serializable{
             puntosJugador++;
     }
 
-    public static void ActualizarPuntos(Jugador jugador, Jugador agente) {
+    public void ActualizarPuntos(Jugador jugador, Jugador agente) {
         int i;
         int AuxPuntos = 0;
         ArrayList<Carta> Aux = jugador.getMano();
@@ -181,6 +181,18 @@ public class Partida implements Serializable{
         }
     }
 
+    public boolean checkNumRondas() {
+        if (rondasJugadas >= numRondas) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void añadirRondaJugada(){
+        rondasJugadas++;
+    }
+
     public int getPuntosJugadorRonda() {
         return puntosJugadorRonda;
     }
@@ -189,4 +201,16 @@ public class Partida implements Serializable{
         return puntosAgenteRonda;
     }
 
+    public void partidaNueva(){
+        rondasJugadas = 0;
+        puntosJugador = 0;
+        puntosAgente = 0;
+    }
+    public int getPuntosAgente() {
+        return puntosAgente;
+    }
+
+    public int getPuntosJugador() {
+        return puntosJugador;
+    }
 }

@@ -8,17 +8,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.uvigo.uvigotelecopsicg08.blackjackqlearning.home_screen">
-
-    <Button
-        android:text="Scores"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/buttonSettings"
-        android:layout_alignRight="@+id/buttonSettings"
-        android:layout_alignEnd="@+id/buttonSettings"
-        android:layout_marginTop="46dp"
-        android:id="@+id/buttonScores" />
+    tools:context="com.uvigo.uvigotelecopsicg08.blackjackqlearning.home_screen"
+    android:background="@android:color/holo_orange_light">
 
     <Button
         android:text="Quit"
@@ -31,7 +22,7 @@
         android:id="@+id/buttonQuit" />
 
     <Button
-        android:text="New Play"
+        android:text="New Game"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/buttonNewPlay"
@@ -42,22 +33,31 @@
         android:layout_alignParentStart="true" />
 
     <Button
+        android:text="Continue Game"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonContinue"
+        android:layout_marginTop="37dp"
+        android:layout_marginEnd="21dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:text="Scores"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:id="@+id/buttonScores"
+        android:layout_below="@+id/buttonSettings"
+        android:layout_alignStart="@+id/buttonSettings" />
+
+    <Button
         android:text="Settings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="70dp"
         android:id="@+id/buttonSettings"
-        android:layout_below="@+id/buttonContinue"
-        android:layout_toRightOf="@+id/buttonNewPlay"
-        android:layout_toEndOf="@+id/buttonNewPlay" />
-
-    <Button
-        android:text="Continue Game"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/buttonContinue"
-        android:layout_marginTop="34dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_marginStart="86dp"
+        android:layout_below="@+id/buttonNewPlay"
+        android:layout_alignStart="@+id/buttonNewPlay" />
 </RelativeLayout>

@@ -138,22 +138,25 @@ public class play_screen extends AppCompatActivity {
 
     public void onClickHit(View view) {
         RelativeLayout layout = (RelativeLayout) findViewById(R.id.activity_play_screen);
+        LinearLayout linearLayoutAgente = (LinearLayout) findViewById(R.id.linearLayoutAgente);
+        LinearLayout linearLayoutJugador = (LinearLayout) findViewById(R.id.linearLayoutJugador);
+//        TransitionManager.beginDelayedTransition(linearLayout);
         TransitionManager.beginDelayedTransition(layout);
         if (!partida.getAgente().isPlantado()) {
             if (partida.jugadaAgente()) {
                 RelativeLayout.LayoutParams viejosParams = (RelativeLayout.LayoutParams) nuevaCartaAgente.getLayoutParams();
-                RelativeLayout.LayoutParams nuevosParams = new RelativeLayout.LayoutParams(
-                        RelativeLayout.LayoutParams.WRAP_CONTENT,
-                        RelativeLayout.LayoutParams.WRAP_CONTENT);
-                if (cartasPedidasAgente.isEmpty()) {
+                LinearLayout.LayoutParams nuevosParams = (LinearLayout.LayoutParams) findViewById(R.id.cartaAgente2).getLayoutParams();
+                /*if (cartasPedidasAgente.isEmpty()) {
                     nuevosParams.addRule(RelativeLayout.RIGHT_OF, R.id.cartaAgente2);
                 } else {
                     nuevosParams.addRule(RelativeLayout.RIGHT_OF, cartasPedidasAgente.get(cartasPedidasAgente.size() - 1).getId());
                 }
-                nuevosParams.setMargins(50, 0, 0, 0);
-                nuevaCartaAgente.setLayoutParams(nuevosParams);
+                nuevosParams.setMargins(50, 0, 0, 0);*/
+//                nuevaCartaAgente.setLayoutParams(nuevosParams);
                 nuevaCartaAgente.setId(View.generateViewId());
                 cartasPedidasAgente.add(nuevaCartaAgente);
+                layout.removeView(nuevaCartaAgente);
+                linearLayoutAgente.addView(nuevaCartaAgente, nuevosParams);
                 nuevaCartaAgente = new ImageView(this);
                 nuevaCartaAgente.setImageResource(R.drawable.back);
                 layout.addView(nuevaCartaAgente, viejosParams);
@@ -163,18 +166,23 @@ public class play_screen extends AppCompatActivity {
         }
         partida.pedirJugador();
         RelativeLayout.LayoutParams viejosParams = (RelativeLayout.LayoutParams) nuevaCartaJugador.getLayoutParams();
-        RelativeLayout.LayoutParams nuevosParams = new RelativeLayout.LayoutParams(
+        LinearLayout.LayoutParams nuevosParams = new LinearLayout.LayoutParams(
                 RelativeLayout.LayoutParams.WRAP_CONTENT,
                 RelativeLayout.LayoutParams.WRAP_CONTENT);
-        if (cartasPedidasJugador.isEmpty()) {
+        /*if (cartasPedidasJugador.isEmpty()) {
             nuevosParams.addRule(RelativeLayout.RIGHT_OF, R.id.cartaJugador2);
 
         } else {
             nuevosParams.addRule(RelativeLayout.RIGHT_OF, cartasPedidasJugador.get(cartasPedidasJugador.size() - 1).getId());
-        }
-        nuevosParams.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.cartaJugador1);
-        nuevosParams.setMargins(45, 0, 0, 0);
-        nuevaCartaJugador.setLayoutParams(nuevosParams);
+        }*/
+//        nuevosParams.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.cartaJugador1);
+//        nuevosParams.setMargins(45, 60, 0, 0);
+//        nuevaCartaJugador.setLayoutParams(nuevosParams);
+        layout.removeView(nuevaCartaJugador);
+        ImageView cartax = (ImageView) findViewById(R.id.cartaJugador2);
+        LinearLayout.LayoutParams paramsCartaJugador = (LinearLayout.LayoutParams) cartax.getLayoutParams();
+        nuevaCartaJugador.setLayoutParams(paramsCartaJugador);
+        linearLayoutJugador.addView(nuevaCartaJugador, paramsCartaJugador);
         nuevaCartaJugador.setImageResource(partida.getManoJugador().get(partida.getManoJugador().size() - 1).getCara());
         nuevaCartaJugador.setId(View.generateViewId());
         cartasPedidasJugador.add(nuevaCartaJugador);
@@ -190,10 +198,36 @@ public class play_screen extends AppCompatActivity {
 
     public void onClickStand(View view) {
         RelativeLayout layout = (RelativeLayout) findViewById(R.id.activity_play_screen);
+        LinearLayout linearLayoutAgente = (LinearLayout) findViewById(R.id.linearLayoutAgente);
         TransitionManager.beginDelayedTransition(layout);
         partida.getJugador().plantarse();
         while (!partida.getAgente().isPlantado()) {
+
+
             if (partida.jugadaAgente()) {
+                RelativeLayout.LayoutParams viejosParams = (RelativeLayout.LayoutParams) nuevaCartaAgente.getLayoutParams();
+                LinearLayout.LayoutParams nuevosParams = (LinearLayout.LayoutParams) findViewById(R.id.cartaAgente2).getLayoutParams();
+                /*if (cartasPedidasAgente.isEmpty()) {
+                    nuevosParams.addRule(RelativeLayout.RIGHT_OF, R.id.cartaAgente2);
+                } else {
+                    nuevosParams.addRule(RelativeLayout.RIGHT_OF, cartasPedidasAgente.get(cartasPedidasAgente.size() - 1).getId());
+                }
+                nuevosParams.setMargins(50, 0, 0, 0);*/
+//                nuevaCartaAgente.setLayoutParams(nuevosParams);
+                nuevaCartaAgente.setId(View.generateViewId());
+                cartasPedidasAgente.add(nuevaCartaAgente);
+                layout.removeView(nuevaCartaAgente);
+                linearLayoutAgente.addView(nuevaCartaAgente, nuevosParams);
+                nuevaCartaAgente = new ImageView(this);
+                nuevaCartaAgente.setImageResource(R.drawable.back);
+                layout.addView(nuevaCartaAgente, viejosParams);
+
+            }
+
+
+
+
+            /*if (partida.jugadaAgente()) {
                 RelativeLayout.LayoutParams viejosParams = (RelativeLayout.LayoutParams) nuevaCartaAgente.getLayoutParams();
                 RelativeLayout.LayoutParams nuevosParams = new RelativeLayout.LayoutParams(
                         RelativeLayout.LayoutParams.WRAP_CONTENT,
@@ -211,7 +245,7 @@ public class play_screen extends AppCompatActivity {
                 nuevaCartaAgente.setImageResource(R.drawable.back);
                 layout.addView(nuevaCartaAgente, viejosParams);
 
-            }
+            }*/
             partida.ActualizarPuntos(partida.getJugador(), partida.getAgente());
         }
         TransitionManager.endTransitions(layout);
@@ -250,13 +284,15 @@ public class play_screen extends AppCompatActivity {
 
     public void nuevaRonda() {
         findViewById(R.id.hitButton).setEnabled(true);
+        LinearLayout linearLayoutAgente = (LinearLayout) findViewById(R.id.linearLayoutAgente);
+        LinearLayout linearLayoutJugador = (LinearLayout) findViewById(R.id.linearLayoutJugador);
         RelativeLayout layout = (RelativeLayout) findViewById(R.id.activity_play_screen);
         layout.removeView(mensajeFinRonda);
         for (ImageView carta : cartasPedidasAgente) {
-            layout.removeView(carta);
+            linearLayoutAgente.removeView(carta);
         }
         for (ImageView carta : cartasPedidasJugador) {
-            layout.removeView(carta);
+            linearLayoutJugador.removeView(carta);
         }
 
         partida.nuevaRonda();

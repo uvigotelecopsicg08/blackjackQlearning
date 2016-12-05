@@ -25,13 +25,33 @@
         android:layout_alignParentStart="true"
         android:layout_marginBottom="13dp" />
 
+    <Button
+        android:text="hit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="24dp"
+        android:id="@+id/hitButton"
+        android:onClick="onClickHit"
+        android:layout_marginEnd="45dp"
+        android:layout_alignBaseline="@+id/standButton"
+        android:layout_alignBottom="@+id/standButton"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:text="Agente: "
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/puntosAgente" />
+
     <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/scrollviewAgente"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="14dp">
+        android:layout_marginTop="11dp"
+        android:layout_below="@+id/puntosAgente"
+        android:layout_alignParentStart="true">
 
         <LinearLayout
             android:orientation="horizontal"
@@ -62,17 +82,13 @@
         </LinearLayout>
     </HorizontalScrollView>
 
-    <Button
-        android:text="hit"
+    <TextView
+        android:text="Tú: "
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="24dp"
-        android:id="@+id/hitButton"
-        android:onClick="onClickHit"
-        android:layout_marginEnd="45dp"
-        android:layout_alignBaseline="@+id/standButton"
-        android:layout_alignBottom="@+id/standButton"
-        android:layout_alignParentEnd="true" />
+        android:layout_below="@+id/cartaMazo"
+        android:layout_alignParentStart="true"
+        android:id="@+id/puntosUsuario" />
 
     <ImageView
         android:layout_width="wrap_content"
@@ -80,7 +96,7 @@
         app:srcCompat="@drawable/back"
         android:id="@+id/cartaMazo"
         android:layout_weight="1"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="18dp"
         android:layout_below="@+id/scrollviewAgente"
         android:layout_alignParentEnd="true" />
 
@@ -88,9 +104,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/scrollviewJugador"
-        android:layout_above="@+id/standButton"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="15dp">
+        android:layout_below="@+id/puntosUsuario">
 
         <LinearLayout
             android:orientation="horizontal"

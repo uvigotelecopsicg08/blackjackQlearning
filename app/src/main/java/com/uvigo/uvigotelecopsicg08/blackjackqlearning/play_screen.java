@@ -37,6 +37,7 @@ public class play_screen extends AppCompatActivity {
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         if (extras != null) {
+
             opcion = extras.getInt("OPCION");
             if (opcion == 0) {
                 Toast.makeText(getApplicationContext(), "Iniciar nueva partida", Toast.LENGTH_LONG).show();
@@ -54,7 +55,7 @@ public class play_screen extends AppCompatActivity {
                 ArrayList<Carta> manoJugador = partida.getManoJugador();
                 cartaJugador1.setImageResource(manoJugador.get(0).getCara());
                 cartaJugador2.setImageResource(manoJugador.get(1).getCara());
-
+                mostrarPuntos();
                 RelativeLayout layout = (RelativeLayout) findViewById(R.id.activity_play_screen);
                 ImageView cartaMazo = (ImageView) findViewById(R.id.cartaMazo);
                 RelativeLayout.LayoutParams paramsMazo = (RelativeLayout.LayoutParams) cartaMazo.getLayoutParams();
@@ -66,8 +67,14 @@ public class play_screen extends AppCompatActivity {
                 layout.addView(nuevaCartaAgente, paramsMazo);
                 cartasPedidasJugador = new ArrayList<ImageView>();
                 cartasPedidasAgente = new ArrayList<ImageView>();
+                if (partida.findeRonda()) {
+                    finalRonda();
+                }
+
 
             } else {
+                LinearLayout linearLayoutJugador = (LinearLayout) findViewById(R.id.linearLayoutJugador);
+                LinearLayout linearLayoutAgente = (LinearLayout) findViewById(R.id.linearLayoutAgente);
                 loadParameters(partida,v);
                 Toast.makeText(getApplicationContext(), "Continuar con la partida", Toast.LENGTH_LONG).show();
                 manoAgente = new ArrayList<Carta>();
@@ -97,37 +104,38 @@ public class play_screen extends AppCompatActivity {
                 cartasPedidasAgente = new ArrayList<ImageView>();
                 for (int i = 2; i < manoJugador.size() && manoJugador.size() > 2; i++) {
                     RelativeLayout.LayoutParams viejosParams = (RelativeLayout.LayoutParams) nuevaCartaJugador.getLayoutParams();
-                    RelativeLayout.LayoutParams nuevosParams = new RelativeLayout.LayoutParams(
-                            RelativeLayout.LayoutParams.WRAP_CONTENT,
-                            RelativeLayout.LayoutParams.WRAP_CONTENT);
-                    if (cartasPedidasJugador.isEmpty()) {
+                    LinearLayout.LayoutParams nuevosParams = (LinearLayout.LayoutParams) findViewById(R.id.cartaJugador2).getLayoutParams();
+                    /*if (cartasPedidasJugador.isEmpty()) {
                         nuevosParams.addRule(RelativeLayout.RIGHT_OF, R.id.cartaJugador2);
 
                     } else {
                         nuevosParams.addRule(RelativeLayout.RIGHT_OF, cartasPedidasJugador.get(cartasPedidasJugador.size() - 1).getId());
-                    }
-                    nuevosParams.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.cartaJugador1);
-                    nuevosParams.setMargins(45, 0, 0, 0);
-                    nuevaCartaJugador.setLayoutParams(nuevosParams);
+                    }*/
+//                    nuevosParams.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.cartaJugador1);
+//                    nuevosParams.setMargins(45, 0, 0, 0);
+//                    nuevaCartaJugador.setLayoutParams(nuevosParams);
                     nuevaCartaJugador.setImageResource(partida.getManoJugador().get(i).getCara());  // Cambio de codigo con respecto el de gabri
                     nuevaCartaJugador.setId(View.generateViewId());
                     cartasPedidasJugador.add(nuevaCartaJugador);
+                    nuevaCartaJugador.setLayoutParams(nuevosParams);
+                    layout.removeView(nuevaCartaJugador);
+                    linearLayoutJugador.addView(nuevaCartaJugador, nuevosParams);
                     nuevaCartaJugador = new ImageView(this);
                     nuevaCartaJugador.setImageResource(R.drawable.back);
                     layout.addView(nuevaCartaJugador, viejosParams);
                 }
                 for (int i = 2; i < manoAgente.size() && manoJugador.size() > 2; i++) {
                     RelativeLayout.LayoutParams viejosParams = (RelativeLayout.LayoutParams) nuevaCartaAgente.getLayoutParams();
-                    RelativeLayout.LayoutParams nuevosParams = new RelativeLayout.LayoutParams(
-                            RelativeLayout.LayoutParams.WRAP_CONTENT,
-                            RelativeLayout.LayoutParams.WRAP_CONTENT);
-                    if (cartasPedidasAgente.isEmpty()) {
+                    LinearLayout.LayoutParams nuevosParams = (LinearLayout.LayoutParams) findViewById(R.id.cartaAgente2).getLayoutParams();
+                    /*if (cartasPedidasAgente.isEmpty()) {
                         nuevosParams.addRule(RelativeLayout.RIGHT_OF, R.id.cartaAgente2);
                     } else {
                         nuevosParams.addRule(RelativeLayout.RIGHT_OF, cartasPedidasAgente.get(i).getId());
                     }
                     nuevosParams.setMargins(50, 0, 0, 0);
-                    nuevaCartaAgente.setLayoutParams(nuevosParams);
+                    nuevaCartaAgente.setLayoutParams(nuevosParams);*/
+                    layout.removeView(nuevaCartaAgente);
+                    linearLayoutAgente.addView(nuevaCartaAgente, nuevosParams);
                     nuevaCartaAgente.setId(View.generateViewId());
                     cartasPedidasAgente.add(nuevaCartaAgente);
                     nuevaCartaAgente = new ImageView(this);
@@ -194,6 +202,7 @@ public class play_screen extends AppCompatActivity {
         nuevaCartaJugador.setImageResource(R.drawable.back);
         layout.addView(nuevaCartaJugador, viejosParams);
         partida.ActualizarPuntos(partida.getJugador(), partida.getAgente());
+        mostrarPuntos();
         if (partida.findeRonda()) {
             finalRonda();
             revelarCartasAgente();
@@ -205,7 +214,7 @@ public class play_screen extends AppCompatActivity {
         LinearLayout linearLayoutAgente = (LinearLayout) findViewById(R.id.linearLayoutAgente);
         TransitionManager.beginDelayedTransition(layout);
         partida.getJugador().plantarse();
-        while (!partida.getAgente().isPlantado()) {
+        while (!partida.getAgente().isPlantado() && partida.getPuntosAgenteRonda()<21) {
 
 
             if (partida.jugadaAgente()) {
@@ -228,9 +237,6 @@ public class play_screen extends AppCompatActivity {
 
             }
 
-
-
-
             /*if (partida.jugadaAgente()) {
                 RelativeLayout.LayoutParams viejosParams = (RelativeLayout.LayoutParams) nuevaCartaAgente.getLayoutParams();
                 RelativeLayout.LayoutParams nuevosParams = new RelativeLayout.LayoutParams(
@@ -251,6 +257,7 @@ public class play_screen extends AppCompatActivity {
 
             }*/
             partida.ActualizarPuntos(partida.getJugador(), partida.getAgente());
+            mostrarPuntos();
         }
         TransitionManager.endTransitions(layout);
         finalRonda();
@@ -275,7 +282,9 @@ public class play_screen extends AppCompatActivity {
         RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.WRAP_CONTENT,
                 RelativeLayout.LayoutParams.WRAP_CONTENT);
-        p.addRule(RelativeLayout.CENTER_VERTICAL);
+        p.addRule(RelativeLayout.BELOW, R.id.scrollviewAgente);
+//        p.addRule(RelativeLayout.CENTER_VERTICAL);
+        p.setMargins(0,150,0,0);
         mensajeFinRonda = new TextView(this);
         mensajeFinRonda.setText("Agente: " + partida.getPuntosAgenteRonda() + " Tú: " + partida.getPuntosJugadorRonda());
         mensajeFinRonda.setLayoutParams(p);
@@ -284,7 +293,12 @@ public class play_screen extends AppCompatActivity {
         partida.añadirRondaJugada();
         rondaAcabada = true;
     }
-
+    public void mostrarPuntos(){
+        TextView puntosAgente = (TextView) findViewById(R.id.puntosAgente);
+        puntosAgente.setText("Agente: "+ partida.getJugador().getPuntos2());
+        TextView puntosJugador = (TextView) findViewById(R.id.puntosUsuario);
+        puntosJugador.setText("Tú: " + partida.getPuntosJugadorRonda());
+    }
 
     public void nuevaRonda() {
         findViewById(R.id.hitButton).setEnabled(true);
@@ -312,6 +326,7 @@ public class play_screen extends AppCompatActivity {
         ArrayList<Carta> manoJugador = partida.getManoJugador();
         cartaJugador1.setImageResource(manoJugador.get(0).getCara());
         cartaJugador2.setImageResource(manoJugador.get(1).getCara());
+        mostrarPuntos();
     }
 
 

@@ -11,8 +11,8 @@ import java.io.Serializable;
 public class Partida implements Serializable {
     //datos de la partida
     private static boolean jugadorListo, agenteListo; //boolean que indica si el jugador/agente ha tomado una decisión
-    private static Jugador entrenador, agente;
-    private static JugadorHumano jugador;
+    private static Jugador entrenador, jugadorHumano, jugador;
+    private static QLJugador agente;
     private static Mazo mazo;
 
     public static int getNumRondas() {
@@ -29,10 +29,66 @@ public class Partida implements Serializable {
 
     public Partida() {
         jugador = new JugadorHumano("jugador"); //Este jugador seria el interactivo
-        agente = new Jugador("agente");
-        numRondas = 10;
-        mazo = new Mazo();
+        agente = new QLJugador("agente");
+        jugadorHumano = new JugadorHumano("jugadorHumano");  //Este jugador seria el interactivo
+        numRondas=1750;
+        mazo=new Mazo();
+        Train();
+        numRondas=10;
+        rondasJugadas=0;
+        puntosJugador=0;
+        puntosAgente=0;
     }
+    public static void Train(){
+        while(numRondas!=rondasJugadas){
+            int in = 0;
+            puntosJugadorRonda=0;
+            puntosAgenteRonda=0;
+            mazo.inicializar();
+            mazo.barajar();
+            mazo.repartirCartas(jugador, agente);
+            ActualizarPuntos(jugador,agente);
+            agente.setPuntos2(puntosJugadorRonda);
+            jugador.setPuntos2(puntosAgenteRonda);
+            for (int i=0;i<jugador.getMano().size();i++){
+                //		in = 0;
+                //		System.out.println("Cartas en mi mano iniciales:"+jugador.getMano().get(i).getValor());
+            }
+            while(puntosJugadorRonda<21 && puntosAgenteRonda<21 && !(agente.isPlantado() && jugador.isPlantado())){
+				/*			if (in==1 && !agente.isPlantado()){
+				agente.Refuerzo(0);
+			}*/
+                if (!jugador.isPlantado())
+                    jugador.HacerJugada(mazo);
+                for (int i=0;i<jugador.getMano().size();i++){
+                    //			System.out.println("Cartas en mi mano:"+jugador.getMano().get(i).getValor());
+                }
+                if (!agente.isPlantado())
+                    agente.HacerJugada(mazo);
+
+                ActualizarPuntos(jugador,agente);
+                in=1;
+
+            }
+            //			System.out.println("Jugador="+puntosJugadorRonda+ "Agente="+puntosAgenteRonda);
+            recuentoPuntos();
+            rondasJugadas++;
+
+        }
+
+        System.out.println("Partida finalizada.");
+        System.out.println("Jugador="+puntosJugador+ "Agente="+puntosAgente);
+
+        if(puntosJugador==puntosAgente) System.out.println("Los jugadores han empatado.");
+        else if(puntosJugador>puntosAgente) System.out.println("El jugador ha ganado.");
+        else System.out.println("El agente ha ganado");
+    }
+
+
+
+
+
+
 
     public void nuevaRonda() {
         puntosJugadorRonda = 0;
@@ -46,62 +102,51 @@ public class Partida implements Serializable {
 
     }
 
-    public void main(String[] args) {
-        //inicializamos partida
-//		jugador = new Jugador("jugador"); //Esta Jugador es el basico con el behavioral basico
-        jugador = new JugadorHumano("jugador"); //Este jugador seria el interactivo
-        agente = new Jugador("agente");
-        numRondas = 10;
-        mazo = new Mazo();
-        while (numRondas != rondasJugadas) {
-            puntosJugadorRonda = 0;
-            puntosAgenteRonda = 0;
-            mazo.inicializar();
-            mazo.barajar();
-            mazo.repartirCartas(jugador, agente);
-            ActualizarPuntos(jugador, agente);
-            agente.setPuntos2(puntosJugadorRonda);
-            jugador.setPuntos2(puntosAgenteRonda);
 
-            while (puntosJugadorRonda < 21 && puntosAgenteRonda < 21 && !(agente.isPlantado() && jugador.isPlantado())) {
-                if (!jugador.isPlantado())
-                    jugador.HacerJugada(mazo);
-                if (!agente.isPlantado())
-                    agente.HacerJugada(mazo);
-                ActualizarPuntos(jugador, agente);
-            }
-            System.out.println("Jugador=" + puntosJugadorRonda + "Agente=" + puntosAgenteRonda);
-            recuentoPuntos();
-            rondasJugadas++;
+    public static void recuentoPuntos() {
+        if (agente.isPlantado())
+            agente.EstadoAccionAnterior=agente.EstadoAccionActual;
+        if (puntosJugadorRonda>puntosAgenteRonda && puntosJugadorRonda<=21){
+            puntosJugador++;
+            agente.Refuerzo(-10);
+            agente.EstadoAccionAnterior=null;
+        }
+        else if (puntosAgenteRonda>puntosJugadorRonda && puntosAgenteRonda<=21){
+            puntosAgente++;
+            agente.Refuerzo(10);
+            agente.EstadoAccionAnterior=null;
 
         }
+		/*else if(puntosAgenteRonda==puntosJugadorRonda && puntosJugadorRonda<=21)
+	{
+		puntosJugador++;
+		puntosAgente++;
 
-        System.out.println("Partida finalizada.");
-        System.out.println("Jugador=" + puntosJugador + "Agente=" + puntosAgente);
+	}*/
+        else if (puntosAgenteRonda<21 && puntosJugadorRonda>21){
+            agente.Refuerzo(10);
+            puntosAgente++;
+            agente.EstadoAccionAnterior=null;
 
-        if (puntosJugador == puntosAgente) System.out.println("Los jugadores han empatado.");
-        else if (puntosJugador > puntosAgente) System.out.println("El jugador ha ganado.");
-        else System.out.println("El agente ha ganado");
+        }
+        else if (puntosJugadorRonda<21 && puntosAgenteRonda>21){
+            agente.Refuerzo(-10);
+            puntosJugador++;
+            agente.EstadoAccionAnterior=null;
+
+        }	else if (puntosJugadorRonda<21 && puntosAgenteRonda<21 && puntosJugadorRonda==puntosAgenteRonda){
+            agente.Refuerzo(5);
+            agente.EstadoAccionAnterior=null;
+
+        }
+        else if (puntosJugadorRonda>21 && puntosAgenteRonda>21){
+            agente.Refuerzo(-10);
+            agente.EstadoAccionAnterior=null;
+
+        }
     }
 
-    public void recuentoPuntos() {
-        if (puntosJugadorRonda > puntosAgenteRonda && puntosJugadorRonda <= 21)
-            puntosJugador++;
-        else if (puntosAgenteRonda > puntosJugadorRonda && puntosAgenteRonda <= 21)
-            puntosAgente++;
-    /*else if(puntosAgenteRonda==puntosJugadorRonda && puntosJugadorRonda<=21)
-    {
-        puntosJugador++;
-        puntosAgente++;
-
-    }*/
-        else if (puntosAgenteRonda < 21 && puntosJugadorRonda > 21)
-            puntosAgente++;
-        else if (puntosJugadorRonda < 21 && puntosAgenteRonda > 21)
-            puntosJugador++;
-    }
-
-    public void ActualizarPuntos(Jugador jugador, Jugador agente) {
+    public static void ActualizarPuntos(Jugador jugador, Jugador agente) {
         int i;
         int AuxPuntos = 0;
         ArrayList<Carta> Aux = jugador.getMano();

@@ -1,5 +1,6 @@
 package com.uvigo.uvigotelecopsicg08.blackjackqlearning;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Vector;
 
@@ -7,7 +8,7 @@ import java.util.Vector;
  * Created by Gabriel on 22/11/2016.
  */
 
-public class QLJugador extends Jugador {
+public class QLJugador extends Jugador implements Serializable {
     /*double alpha=0.6 ;  //Valores de la Thesis
 double gamma=0.75;
 double epsilon=0.5;*/

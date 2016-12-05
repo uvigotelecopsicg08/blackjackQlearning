@@ -3,6 +3,7 @@ package com.uvigo.uvigotelecopsicg08.blackjackqlearning;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -27,13 +28,15 @@ public class play_screen extends AppCompatActivity {
     TextView mensajeFinRonda;
     ArrayList<Carta> manoAgente = null;
     int opcion;
+    MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_play_screen);
         View v= (View) findViewById(R.id.activity_play_screen);
-
+        Context context = getApplicationContext();
+        mediaPlayer = MediaPlayer.create(context, R.raw.tetris);
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         if (extras != null) {
@@ -406,6 +409,10 @@ public class play_screen extends AppCompatActivity {
 
     protected void onPause() {
         super.onPause();
+        if(mediaPlayer.isPlaying()){
+            mediaPlayer.pause();
+        }
+
         saveObject(partida);
 
     }
@@ -417,6 +424,7 @@ public class play_screen extends AppCompatActivity {
     }
 
     protected void onRestart() {
+       mediaPlayer.start();
         super.onRestart();
 
     }
@@ -454,19 +462,22 @@ public class play_screen extends AppCompatActivity {
             System.out.println("Ya hay parametros");
             partida.setNumRondas(parameters.getNumRondas());
             if(parameters.getColor().equals("Rojo")) {
-                v.setBackgroundColor(Color.RED);
+                v.setBackgroundColor(Color.parseColor("#CC0000"));
             }
             else if (parameters.getColor().equals("Verde")){
-                v.setBackgroundColor(Color.GREEN);
+                v.setBackgroundColor(Color.parseColor("#009900"));
             }
             else if (parameters.getColor().equals("Amarillo")){
-                v.setBackgroundColor(Color.YELLOW);
+               v.setBackgroundColor(Color.parseColor("#FFCC00"));
             }
             else if (parameters.getColor().equals("Negro")){
-                v.setBackgroundColor(Color.BLACK);
+                v.setBackgroundColor(Color.parseColor("#000000"));
             }
             else if (parameters.getColor().equals("Blanco")){
-                v.setBackgroundColor(Color.WHITE);
+                v.setBackgroundColor(Color.parseColor("#FFFFFF"));
+            }
+            if(parameters.isMusic()){
+                mediaPlayer.start();
             }
 
         }catch (IOException e){

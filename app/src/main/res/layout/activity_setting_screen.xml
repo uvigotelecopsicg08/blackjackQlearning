@@ -8,7 +8,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.uvigo.uvigotelecopsicg08.blackjackqlearning.setting_screen">
+    tools:context="com.uvigo.uvigotelecopsicg08.blackjackqlearning.setting_screen"
+    android:background="@android:color/holo_orange_dark">
 
     <TextView
         android:text="Color de tapete"

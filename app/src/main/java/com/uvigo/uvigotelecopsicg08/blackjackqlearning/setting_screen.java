@@ -1,6 +1,7 @@
 package com.uvigo.uvigotelecopsicg08.blackjackqlearning;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -73,11 +75,14 @@ public class setting_screen extends AppCompatActivity {
 
         Context context = getApplicationContext();
         try {
-            System.out.println("Guardando los parametros");
             ObjectOutputStream oos = new ObjectOutputStream(context.openFileOutput("parameters.txt", Context.MODE_PRIVATE)); //Select where you wish to save the file...
             oos.writeObject(p); // write the class as an 'object'
             oos.flush(); // flush the stream to insure all of the information was written to 'save_object.bin'
             oos.close();// close the stream
+            Toast.makeText(getApplicationContext(), "Parametros guardados", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(setting_screen.this, home_screen.class);
+            startActivity(intent);
+
         }
 
         catch (IOException e){
@@ -90,10 +95,12 @@ public class setting_screen extends AppCompatActivity {
         rondas.setText("10",TextView.BufferType.EDITABLE);
         music.setChecked(false);
         facil.setChecked(false);
-        System.out.println("Parametros reseteados");
+        Toast.makeText(getApplicationContext(), "Parámetros reseteados", Toast.LENGTH_LONG).show();
+
 
     }
     public void onClickResetScores(View view) {
+        Toast.makeText(getApplicationContext(), "Puntuaciones reseteadas", Toast.LENGTH_LONG).show();
     }
     public void onCheckboxMusic(View view) {
         p.setMusic(music.isChecked());

@@ -1,5 +1,6 @@
 package com.uvigo.uvigotelecopsicg08.blackjackqlearning;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -44,7 +45,18 @@ public class play_screen extends AppCompatActivity {
             opcion = extras.getInt("OPCION");
             if (opcion == 0) {
                 Toast.makeText(getApplicationContext(), "Iniciar nueva partida", Toast.LENGTH_LONG).show();
-                partida = new Partida();
+               // partida = new Partida();
+                try{
+                    ObjectInputStream ois = new ObjectInputStream(context.openFileInput("partidaNew.txt"));
+                    partida =(Partida) ois.readObject();
+
+
+                }catch (IOException e){
+                    partida =new Partida();
+
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
                 loadParameters(partida,v);
                 partida.nuevaRonda();
 
@@ -486,4 +498,5 @@ public class play_screen extends AppCompatActivity {
             System.out.println("No hay parametros");
         }
     }
+
 }

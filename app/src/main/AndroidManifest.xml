@@ -17,8 +17,11 @@
         </activity>
         <activity android:name=".play_screen" />
         <activity android:name=".setting_screen" />
-        <activity android:name=".scores_screen"></activity>
-        <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
+        <activity android:name=".scores_screen" />
+
+        <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+        <activity android:name=".loading_screen"></activity>
     </application>
 
 </manifest>

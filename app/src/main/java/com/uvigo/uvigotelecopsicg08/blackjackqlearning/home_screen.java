@@ -1,5 +1,6 @@
 package com.uvigo.uvigotelecopsicg08.blackjackqlearning;
 
+import android.app.ProgressDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
@@ -34,9 +35,12 @@ public class home_screen extends AppCompatActivity  implements View.OnClickListe
                 // Toast.makeText(getApplicationContext(),"prueba fenomeno",Toast.LENGTH_LONG).show();
                  opcion = 0;
                 partidaIniciada=true;
-                 intent =new Intent(home_screen.this,play_screen.class);
-                intent.putExtra("OPCION",opcion);
+                intent =new Intent(home_screen.this,loading_screen.class);
+                //intent.putExtra("OPCION",opcion);
                 startActivity(intent);
+
+
+
                 break;
             case R.id.buttonContinue:
                 if(partidaIniciada) {
@@ -44,6 +48,7 @@ public class home_screen extends AppCompatActivity  implements View.OnClickListe
                     intent = new Intent(home_screen.this, play_screen.class);
                     intent.putExtra("OPCION", opcion);
                     startActivity(intent);
+
                 }
                 else{
                     Toast.makeText(getApplicationContext(), "No hay partida iniciada", Toast.LENGTH_LONG).show();

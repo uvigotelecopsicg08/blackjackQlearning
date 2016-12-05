@@ -327,6 +327,10 @@ public class play_screen extends AppCompatActivity {
         cartaJugador1.setImageResource(manoJugador.get(0).getCara());
         cartaJugador2.setImageResource(manoJugador.get(1).getCara());
         mostrarPuntos();
+        if (partida.findeRonda()) {
+            finalRonda();
+        }
+
     }
 
 

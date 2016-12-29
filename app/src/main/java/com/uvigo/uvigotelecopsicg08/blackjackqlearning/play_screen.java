@@ -3,6 +3,8 @@ package com.uvigo.uvigotelecopsicg08.blackjackqlearning;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.support.v7.app.AlertDialog;
@@ -34,6 +36,8 @@ public class play_screen extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //Base de datos
+
         this.setContentView(R.layout.activity_play_screen);
         View v= (View) findViewById(R.id.activity_play_screen);
         Context context = getApplicationContext();
@@ -353,6 +357,8 @@ public class play_screen extends AppCompatActivity {
     public boolean onTouchEvent(MotionEvent event) {
         if (partida.checkNumRondas()) {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+            DataBaseManager dbM=new DataBaseManager(this);
+            dbM.insertar(partida.getPuntosAgente(),partida.getPuntosJugador());
             if(partida.getPuntosAgente() > partida.getPuntosJugador()){
                 alertDialogBuilder.setTitle("Has perdido");
             }else if(partida.getPuntosAgente() == partida.getPuntosJugador()){

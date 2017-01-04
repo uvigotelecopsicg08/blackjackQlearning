@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/empty_scores">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="56dp">
+
+        <TextView
+            android:text="No hay un registro de partidas "
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewEmpty" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="137dp"
+        android:weightSum="1">
+
+        <ImageView
+            android:layout_width="148dp"
+            android:layout_height="61dp"
+            app:srcCompat="@drawable/c1"
+            android:id="@+id/imageView4"
+            android:layout_weight="0.27" />
+
+        <ImageView
+            android:layout_width="148dp"
+            android:layout_height="61dp"
+            app:srcCompat="@drawable/d1"
+            android:id="@+id/imageView5" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:weightSum="1">
+
+        <ImageView
+            android:layout_width="148dp"
+            android:layout_height="61dp"
+            app:srcCompat="@drawable/s1"
+            android:id="@+id/imageView6"
+            android:layout_weight="0.13" />
+
+        <ImageView
+            android:layout_width="148dp"
+            android:layout_height="61dp"
+            app:srcCompat="@drawable/h1"
+            android:id="@+id/imageView7" />
+    </LinearLayout>
+
+</LinearLayout>

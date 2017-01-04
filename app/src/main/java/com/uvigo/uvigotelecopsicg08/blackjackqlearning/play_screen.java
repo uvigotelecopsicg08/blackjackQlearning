@@ -56,7 +56,7 @@ public class play_screen extends AppCompatActivity {
 
 
                 }catch (IOException e){
-                    partida =new Partida();
+                    partida =new Partida(context);
 
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
@@ -124,15 +124,7 @@ public class play_screen extends AppCompatActivity {
                 for (int i = 2; i < manoJugador.size() && manoJugador.size() > 2; i++) {
                     RelativeLayout.LayoutParams viejosParams = (RelativeLayout.LayoutParams) nuevaCartaJugador.getLayoutParams();
                     LinearLayout.LayoutParams nuevosParams = (LinearLayout.LayoutParams) findViewById(R.id.cartaJugador2).getLayoutParams();
-                    /*if (cartasPedidasJugador.isEmpty()) {
-                        nuevosParams.addRule(RelativeLayout.RIGHT_OF, R.id.cartaJugador2);
 
-                    } else {
-                        nuevosParams.addRule(RelativeLayout.RIGHT_OF, cartasPedidasJugador.get(cartasPedidasJugador.size() - 1).getId());
-                    }*/
-//                    nuevosParams.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.cartaJugador1);
-//                    nuevosParams.setMargins(45, 0, 0, 0);
-//                    nuevaCartaJugador.setLayoutParams(nuevosParams);
                     nuevaCartaJugador.setImageResource(partida.getManoJugador().get(i).getCara());  // Cambio de codigo con respecto el de gabri
                     nuevaCartaJugador.setId(View.generateViewId());
                     cartasPedidasJugador.add(nuevaCartaJugador);
@@ -177,13 +169,7 @@ public class play_screen extends AppCompatActivity {
             if (partida.jugadaAgente()) {
                 RelativeLayout.LayoutParams viejosParams = (RelativeLayout.LayoutParams) nuevaCartaAgente.getLayoutParams();
                 LinearLayout.LayoutParams nuevosParams = (LinearLayout.LayoutParams) findViewById(R.id.cartaAgente2).getLayoutParams();
-                /*if (cartasPedidasAgente.isEmpty()) {
-                    nuevosParams.addRule(RelativeLayout.RIGHT_OF, R.id.cartaAgente2);
-                } else {
-                    nuevosParams.addRule(RelativeLayout.RIGHT_OF, cartasPedidasAgente.get(cartasPedidasAgente.size() - 1).getId());
-                }
-                nuevosParams.setMargins(50, 0, 0, 0);*/
-//                nuevaCartaAgente.setLayoutParams(nuevosParams);
+
                 nuevaCartaAgente.setId(View.generateViewId());
                 cartasPedidasAgente.add(nuevaCartaAgente);
                 layout.removeView(nuevaCartaAgente);
@@ -200,15 +186,7 @@ public class play_screen extends AppCompatActivity {
         LinearLayout.LayoutParams nuevosParams = new LinearLayout.LayoutParams(
                 RelativeLayout.LayoutParams.WRAP_CONTENT,
                 RelativeLayout.LayoutParams.WRAP_CONTENT);
-        /*if (cartasPedidasJugador.isEmpty()) {
-            nuevosParams.addRule(RelativeLayout.RIGHT_OF, R.id.cartaJugador2);
 
-        } else {
-            nuevosParams.addRule(RelativeLayout.RIGHT_OF, cartasPedidasJugador.get(cartasPedidasJugador.size() - 1).getId());
-        }*/
-//        nuevosParams.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.cartaJugador1);
-//        nuevosParams.setMargins(45, 60, 0, 0);
-//        nuevaCartaJugador.setLayoutParams(nuevosParams);
         layout.removeView(nuevaCartaJugador);
         ImageView cartax = (ImageView) findViewById(R.id.cartaJugador2);
         LinearLayout.LayoutParams paramsCartaJugador = (LinearLayout.LayoutParams) cartax.getLayoutParams();
@@ -357,8 +335,9 @@ public class play_screen extends AppCompatActivity {
     public boolean onTouchEvent(MotionEvent event) {
         if (partida.checkNumRondas()) {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-            DataBaseManager dbM=new DataBaseManager(this);
+            DataBaseManager  dbM =new DataBaseManager(this);
             dbM.insertar(partida.getPuntosAgente(),partida.getPuntosJugador());
+            dbM.close();
             if(partida.getPuntosAgente() > partida.getPuntosJugador()){
                 alertDialogBuilder.setTitle("Has perdido");
             }else if(partida.getPuntosAgente() == partida.getPuntosJugador()){
@@ -454,6 +433,7 @@ public class play_screen extends AppCompatActivity {
             oos.writeObject(p); // write the class as an 'object'
             oos.flush(); // flush the stream to insure all of the information was written to 'save_object.bin'
             oos.close();// close the stream
+            p.saveMatrizQ(context);
         } catch (Exception ex) {
 
             ex.printStackTrace();

@@ -18,6 +18,9 @@ public class Jugador {
     public Jugador(String nombre) {
         this.nombre = nombre;
     }
+    public Jugador(){
+
+    }
 
     public int getManoRival() {
         return ManoRival;

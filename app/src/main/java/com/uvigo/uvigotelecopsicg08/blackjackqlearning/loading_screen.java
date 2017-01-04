@@ -27,9 +27,9 @@ public class loading_screen extends AppCompatActivity {
             public void run() {
                 try {
                     super.run();
-                    sleep(1000);  //Delay of 10 seconds
-                    Partida partida = new Partida();
+                     sleep(500);  //Delay of 10 seconds
                     Context context = getApplicationContext();
+                    Partida partida = new Partida(context);
                         ObjectOutputStream oos = new ObjectOutputStream(context.openFileOutput("partidaNew.txt", Context.MODE_PRIVATE)); //Select where you wish to save the file...
                         oos.writeObject(partida); // write the class as an 'object'
                         oos.flush(); // flush the stream to insure all of the information was written to 'save_object.bin'

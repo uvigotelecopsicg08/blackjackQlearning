@@ -38,4 +38,10 @@ public class DataBaseManager {
         String columnas[] = new String[]{CN_ID,CN_MACHINE_SCORE,CN_PLAYER_SCORE,CN_DATE};
        return db.query(TABLE_NAME,columnas,null,null,null,null,null,null);
     }
+    public void close() {
+        db.close();
+    }
+    public void delete(){
+        db.execSQL("DELETE FROM "+TABLE_NAME);
+    }
 }

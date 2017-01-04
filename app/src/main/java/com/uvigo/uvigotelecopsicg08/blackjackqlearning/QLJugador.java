@@ -1,8 +1,11 @@
 package com.uvigo.uvigotelecopsicg08.blackjackqlearning;
 
 import java.io.Serializable;
+import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.Vector;
+
+import static java.security.PublicKey.*;
 
 /**
  * Created by Gabriel on 22/11/2016.
@@ -12,6 +15,7 @@ public class QLJugador extends Jugador implements Serializable {
     /*double alpha=0.6 ;  //Valores de la Thesis
 double gamma=0.75;
 double epsilon=0.5;*/
+    static final long serialVersionUID= 1;
     double alpha=0.9 ;  //Valores del Codigo
     double gamma=0.8;
     double epsilon=0.3;
@@ -32,6 +36,9 @@ double epsilon=0.5;*/
 		/*Maximo numero de veces que se puede llegar a hitear 6 que seria el equivalente a que cada uno tenga
 		la mitad de las cartas más bajas */
 		/*el 0 es hitear y el 1 es plantarse*/
+    }
+    public QLJugador(){
+        //super("Agente");
     }
 
     public boolean HacerJugada(Mazo mazo){

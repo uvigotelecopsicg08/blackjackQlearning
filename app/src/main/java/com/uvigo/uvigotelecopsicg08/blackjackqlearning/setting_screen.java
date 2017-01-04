@@ -100,7 +100,11 @@ public class setting_screen extends AppCompatActivity {
 
     }
     public void onClickResetScores(View view) {
+        DataBaseManager dbM =new DataBaseManager(this);
+        dbM.delete();
+        dbM.close();
         Toast.makeText(getApplicationContext(), "Puntuaciones reseteadas", Toast.LENGTH_LONG).show();
+
     }
     public void onCheckboxMusic(View view) {
         p.setMusic(music.isChecked());

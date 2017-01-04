@@ -1,5 +1,10 @@
 package com.uvigo.uvigotelecopsicg08.blackjackqlearning;
 
+import android.content.Context;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 import java.io.Serializable;
@@ -27,13 +32,15 @@ public class Partida implements Serializable {
     private static int puntosJugador = 0, puntosAgente = 0; //numero de rondas ganadas
     private static int puntosJugadorRonda = 0, puntosAgenteRonda = 0;
 
-    public Partida() {
+    public Partida(Context context) {
         jugador = new JugadorHumano("jugador"); //Este jugador seria el interactivo
         agente = new QLJugador("agente");
         jugadorHumano = new JugadorHumano("jugadorHumano");  //Este jugador seria el interactivo
         numRondas=1750;
         mazo=new Mazo();
-        Train();
+        if(loadMatrizQ(context)) {
+            Train();
+        }
         numRondas=10;
         rondasJugadas=0;
         puntosJugador=0;
@@ -267,4 +274,33 @@ public class Partida implements Serializable {
     public int getPuntosJugador() {
         return puntosJugador;
     }
+    public void saveMatrizQ(Context context) {
+
+        try {
+            ObjectOutputStream oos = new ObjectOutputStream(context.openFileOutput("agenteQL.txt", Context.MODE_PRIVATE)); //Select where you wish to save the file...
+            oos.writeObject(agente); // write the class as an 'object'
+            oos.flush(); // flush the stream to insure all of the information was written to 'save_object.bin'
+            oos.close();// close the stream
+            System.out.println("Se ha guardado la matriz Q ");
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("No se pudo guardar la matriz Q");
+        }
+    }
+    public boolean loadMatrizQ(Context context){
+        try {
+            ObjectInputStream ois = new ObjectInputStream(context.openFileInput("agenteQL.txt"));
+            agente = (QLJugador) ois.readObject();
+            System.out.println("Se ha cargado el agente");
+            return false;
+
+        }catch (IOException e){
+            e.printStackTrace();
+            return true;
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            return true;
+        }
+    }
+
 }

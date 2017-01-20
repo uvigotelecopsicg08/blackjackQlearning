@@ -22,15 +22,23 @@ public class setting_screen extends AppCompatActivity {
     Parameters p ;
     EditText rondas;
     CheckBox music,facil;
+    boolean partidaIniciada=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent intent = getIntent();
+        Bundle extras = intent.getExtras();
+        if (extras != null) {
+
+            partidaIniciada = extras.getBoolean("iniciada");
+            System.out.println("parida inicida*********"+ partidaIniciada);
+        }
         setContentView(R.layout.activity_setting_screen);
         music =(CheckBox)findViewById(R.id.MusicBox);
         facil =(CheckBox) findViewById(R.id.FacilBox);
         rondas=(EditText) findViewById(R.id.editText);
         final String[] colores =
-                new String[]{"Verde","Rojo","Negro","Amarillo","Blanco"};
+                new String[]{"Verde","Rojo","Amarillo","Blanco"};
 
         ArrayAdapter<String> adaptador =
                 new ArrayAdapter<String>(this,
@@ -81,6 +89,7 @@ public class setting_screen extends AppCompatActivity {
             oos.close();// close the stream
             Toast.makeText(getApplicationContext(), "Parametros guardados", Toast.LENGTH_LONG).show();
             Intent intent = new Intent(setting_screen.this, home_screen.class);
+            intent.putExtra("iniciada", partidaIniciada);
             startActivity(intent);
 
         }

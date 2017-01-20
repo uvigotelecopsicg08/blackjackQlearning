@@ -15,6 +15,12 @@ public class home_screen extends AppCompatActivity  implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent intent = getIntent();
+        Bundle extras = intent.getExtras();
+        if (extras != null) {
+
+            partidaIniciada = extras.getBoolean("iniciada");
+        }
         setContentView(R.layout.activity_home_screen);
         buttonNewPlay=(Button)findViewById(R.id.buttonNewPlay);
         buttonContinue=(Button)findViewById(R.id.buttonContinue);
@@ -60,6 +66,7 @@ public class home_screen extends AppCompatActivity  implements View.OnClickListe
                 break;
             case R.id.buttonSettings:
                 intent =new Intent(home_screen.this,setting_screen .class);
+                intent.putExtra("inciada", partidaIniciada);
                 startActivity(intent);
                 break;
             case R.id.buttonQuit:

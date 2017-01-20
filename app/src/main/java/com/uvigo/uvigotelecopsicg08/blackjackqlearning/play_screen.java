@@ -32,6 +32,7 @@ public class play_screen extends AppCompatActivity {
     ArrayList<Carta> manoAgente = null;
     int opcion;
     MediaPlayer mediaPlayer;
+    boolean music=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,7 +110,7 @@ public class play_screen extends AppCompatActivity {
                 ArrayList<Carta> manoJugador = partida.getManoJugador();
                 cartaJugador1.setImageResource(manoJugador.get(0).getCara());
                 cartaJugador2.setImageResource(manoJugador.get(1).getCara());
-
+                mostrarPuntos();
                 RelativeLayout layout = (RelativeLayout) findViewById(R.id.activity_play_screen);
                 ImageView cartaMazo = (ImageView) findViewById(R.id.cartaMazo);
                 RelativeLayout.LayoutParams paramsMazo = (RelativeLayout.LayoutParams) cartaMazo.getLayoutParams();
@@ -152,6 +153,10 @@ public class play_screen extends AppCompatActivity {
                     nuevaCartaAgente = new ImageView(this);
                     nuevaCartaAgente.setImageResource(R.drawable.back);
                     layout.addView(nuevaCartaAgente, viejosParams);
+                }
+                if (partida.findeRonda()) {
+                    finalRonda();
+                    revelarCartasAgente();
                 }
             }
 
@@ -421,7 +426,9 @@ public class play_screen extends AppCompatActivity {
     }
 
     protected void onRestart() {
-       mediaPlayer.start();
+        if(music) {
+            mediaPlayer.start();
+        }
         super.onRestart();
 
     }
@@ -476,6 +483,7 @@ public class play_screen extends AppCompatActivity {
             }
             if(parameters.isMusic()){
                 mediaPlayer.start();
+                music=true;
             }
 
         }catch (IOException e){

@@ -93,6 +93,7 @@ public class play_screen extends AppCompatActivity {
 
 
             } else {
+                partida = (Partida) loadSerializedObject();
                 LinearLayout linearLayoutJugador = (LinearLayout) findViewById(R.id.linearLayoutJugador);
                 LinearLayout linearLayoutAgente = (LinearLayout) findViewById(R.id.linearLayoutAgente);
                 loadParameters(partida,v);
@@ -100,7 +101,6 @@ public class play_screen extends AppCompatActivity {
                 manoAgente = new ArrayList<Carta>();
                 ImageView cartaAgente1 = (ImageView) findViewById(R.id.cartaAgente1);
                 ImageView cartaAgente2 = (ImageView) findViewById(R.id.cartaAgente2);
-                partida = (Partida) loadSerializedObject();
                 manoAgente = partida.getManoAgente();
                 cartaAgente1.setImageResource(manoAgente.get(0).getCara());
                 cartaAgente2.setImageResource(manoAgente.get(1).getCara());

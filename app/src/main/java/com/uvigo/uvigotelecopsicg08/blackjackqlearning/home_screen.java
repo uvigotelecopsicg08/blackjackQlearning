@@ -20,6 +20,7 @@ public class home_screen extends AppCompatActivity  implements View.OnClickListe
         if (extras != null) {
 
             partidaIniciada = extras.getBoolean("iniciada");
+            System.out.println("partida iniciada"+partidaIniciada);
         }
         setContentView(R.layout.activity_home_screen);
         buttonNewPlay=(Button)findViewById(R.id.buttonNewPlay);

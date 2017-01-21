@@ -302,5 +302,8 @@ public class Partida implements Serializable {
             return true;
         }
     }
+  public void  setEpsilon(double epsilon){
+      agente.setEpsilon(epsilon);
+  }
 
 }

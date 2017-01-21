@@ -366,7 +366,12 @@ public class play_screen extends AppCompatActivity {
                     .setNegativeButton("No", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             // Voverá al menú principal
-                        play_screen.this.finish();
+                       // play_screen.this.finish();
+                            Intent intent = new Intent(play_screen.this, home_screen.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            intent.putExtra("iniciada", false);
+                            startActivity(intent);
+
                         }
                     });
 
@@ -484,6 +489,14 @@ public class play_screen extends AppCompatActivity {
             if(parameters.isMusic()){
                 mediaPlayer.start();
                 music=true;
+            }
+            if(parameters.isFacil()){
+                partida.setEpsilon(0.5);
+                System.out.println("Esta pulsado facil");
+            }
+            else{
+                partida.setEpsilon(0);
+                System.out.println("no esta pulsado facil");
             }
 
         }catch (IOException e){

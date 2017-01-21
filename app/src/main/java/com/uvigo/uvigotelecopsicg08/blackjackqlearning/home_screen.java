@@ -43,6 +43,7 @@ public class home_screen extends AppCompatActivity  implements View.OnClickListe
                 partidaIniciada=true;
                 intent =new Intent(home_screen.this,loading_screen.class);
                 //intent.putExtra("OPCION",opcion);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
 
 
@@ -52,6 +53,7 @@ public class home_screen extends AppCompatActivity  implements View.OnClickListe
                 if(partidaIniciada) {
                     opcion = 1;
                     intent = new Intent(home_screen.this, play_screen.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     intent.putExtra("OPCION", opcion);
                     startActivity(intent);
 
@@ -62,11 +64,13 @@ public class home_screen extends AppCompatActivity  implements View.OnClickListe
                 break;
             case R.id.buttonScores:
                 intent =new Intent(home_screen.this,scores_screen .class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 break;
             case R.id.buttonSettings:
                 intent =new Intent(home_screen.this,setting_screen .class);
-                intent.putExtra("inciada", partidaIniciada);
+                intent.putExtra("iniciada", partidaIniciada);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 break;
             case R.id.buttonQuit:

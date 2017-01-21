@@ -292,6 +292,7 @@ public class play_screen extends AppCompatActivity {
         mensajeFinRonda.setLayoutParams(p);
         layout.addView(mensajeFinRonda);
         findViewById(R.id.hitButton).setEnabled(false);
+        findViewById(R.id.standButton).setEnabled(false);
         partida.añadirRondaJugada();
         rondaAcabada = true;
     }
@@ -304,6 +305,7 @@ public class play_screen extends AppCompatActivity {
 
     public void nuevaRonda() {
         findViewById(R.id.hitButton).setEnabled(true);
+        findViewById(R.id.standButton).setEnabled(true);
         LinearLayout linearLayoutAgente = (LinearLayout) findViewById(R.id.linearLayoutAgente);
         LinearLayout linearLayoutJugador = (LinearLayout) findViewById(R.id.linearLayoutJugador);
         RelativeLayout layout = (RelativeLayout) findViewById(R.id.activity_play_screen);

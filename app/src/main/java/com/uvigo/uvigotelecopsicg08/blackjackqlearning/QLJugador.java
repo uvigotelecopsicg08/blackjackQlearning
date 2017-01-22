@@ -43,7 +43,7 @@ double epsilon=0.5;*/
 
     public boolean HacerJugada(Mazo mazo){
         hit =getManoRival()-2;
-
+//System.out.println("****************"+ getManoRival());
         if (getPuntos1()<=11){
             iNewAction = 0;
         } else {

@@ -190,6 +190,8 @@ public class Partida implements Serializable {
 
         agente.setPuntos1(AuxPuntos);
         puntosAgenteRonda = AuxPuntos;
+        agente.setManoRival(jugador.getMano().size());
+
         //  jugador.setPuntos2(AuxPuntos);
 
 

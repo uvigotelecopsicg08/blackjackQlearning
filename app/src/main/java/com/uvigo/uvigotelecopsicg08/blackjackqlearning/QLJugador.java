@@ -47,7 +47,7 @@ double epsilon=0.5;*/
         if (getPuntos1()<=11){
             iNewAction = 0;
         } else {
-            if (getPuntos2()>getPuntos1()&&getManoRival()==2)
+            if (getPuntos2()>getPuntos1()&&getManoRival()==2 && getMano().size()>2)
                 iNewAction = 0;
             else {
                 vGetNewActionQLearning();
@@ -101,7 +101,7 @@ double epsilon=0.5;*/
         }
 
         // Adjusting Q(s,a)
-        if (EstadoAccionAnterior != null) {
+        if (EstadoAccionAnterior != null ) {
             EstadoAccionAnterior.dValAction[AccionAnterior] +=  alpha * (gamma * dQmax - EstadoAccionAnterior.dValAction[AccionAnterior]);
         }
 
@@ -121,7 +121,7 @@ double epsilon=0.5;*/
 
     //Ajustar Valores Q(s,a)
     public void Refuerzo(int R){
-        if (EstadoAccionAnterior != null && getPuntos1()>11) {
+        if (EstadoAccionAnterior != null) {
             EstadoAccionAnterior.dValAction[AccionAnterior] +=  alpha * (R + gamma * dQmax - EstadoAccionAnterior.dValAction[AccionAnterior]);
         }
 		/*	alpha *= dDecFactorLR;						// Reducing the learning rate

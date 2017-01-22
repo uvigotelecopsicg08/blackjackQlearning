@@ -41,16 +41,21 @@ double epsilon=0.5;*/
         //super("Agente");
     }
 
-    public boolean HacerJugada(Mazo mazo){
-        hit =getManoRival()-2;
+    public boolean HacerJugada(Mazo mazo) {
+        hit = getManoRival() - 2;
 //System.out.println("****************"+ getManoRival());
-        if (getPuntos1()<=11){
+        if (getPuntos1() <= 11) {
             iNewAction = 0;
         } else {
-            if (getPuntos2()>getPuntos1()&&getManoRival()==2 && getMano().size()>2)
+            if (getPuntos2() > getPuntos1() && getManoRival() == 2 && getMano().size() > 2)
                 iNewAction = 0;
+
             else {
-                vGetNewActionQLearning();
+                if (getPuntos2() < getPuntos1() && getManoRival() == 2 && getMano().size() > 2) {
+                    iNewAction = 1;
+                } else {
+                    vGetNewActionQLearning();
+                }
             }
         }
         if (iNewAction==0) {

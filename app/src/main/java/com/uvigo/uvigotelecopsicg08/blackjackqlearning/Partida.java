@@ -235,7 +235,7 @@ public class Partida implements Serializable {
     }
 
     public boolean findeRonda() {
-        if (puntosJugadorRonda < 21 && puntosAgenteRonda < 21 && !(agente.isPlantado() && jugador.isPlantado())) {
+        if (puntosJugadorRonda < 21 && puntosAgenteRonda < 21 && !(agente.isPlantado() && jugador.isPlantado()) && !((jugador.getPuntos2()<jugador.getPuntos1())&&agente.getMano().size()==2&&jugador.getMano().size()>2)) {
             return false;
         } else {
             return true;

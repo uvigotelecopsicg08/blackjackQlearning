@@ -279,6 +279,7 @@ public class play_screen extends AppCompatActivity {
     }
 
     public void finalRonda() {
+        mostrarPuntosFinRonda();
         partida.recuentoPuntos();
         RelativeLayout layout = (RelativeLayout) findViewById(R.id.activity_play_screen);
         RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(
@@ -295,6 +296,14 @@ public class play_screen extends AppCompatActivity {
         findViewById(R.id.standButton).setEnabled(false);
         partida.añadirRondaJugada();
         rondaAcabada = true;
+    }
+
+    public void mostrarPuntosFinRonda(){
+        TextView puntosAgente = (TextView) findViewById(R.id.puntosAgente);
+        puntosAgente.setText("Agente: "+ partida.getPuntosAgenteRonda());
+        TextView puntosJugador = (TextView) findViewById(R.id.puntosUsuario);
+        puntosJugador.setText("Tú: " + partida.getPuntosJugadorRonda());
+
     }
     public void mostrarPuntos(){
         TextView puntosAgente = (TextView) findViewById(R.id.puntosAgente);

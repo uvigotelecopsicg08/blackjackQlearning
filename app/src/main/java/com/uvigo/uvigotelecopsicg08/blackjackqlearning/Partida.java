@@ -36,15 +36,18 @@ public class Partida implements Serializable {
         jugador = new JugadorHumano("jugador"); //Este jugador seria el interactivo
         agente = new QLJugador("agente");
         jugadorHumano = new JugadorHumano("jugadorHumano");  //Este jugador seria el interactivo
-        numRondas=1750;
+        numRondas=3000;
         mazo=new Mazo();
+        agente.setEpsilon(0.5);
         if(loadMatrizQ(context)) {
             Train();
         }
-        numRondas=10;
+        agente.setAlpha(0.6);
         rondasJugadas=0;
         puntosJugador=0;
         puntosAgente=0;
+        numRondas=10;
+
     }
     public static void Train(){
         while(numRondas!=rondasJugadas){
@@ -55,6 +58,8 @@ public class Partida implements Serializable {
             mazo.barajar();
             mazo.repartirCartas(jugador, agente);
             ActualizarPuntos(jugador,agente);
+            agente.setAsRival(jugador.hasAs());
+            jugador.setAsRival(agente.hasAs());
             agente.setPuntos2(puntosJugadorRonda);
             jugador.setPuntos2(puntosAgenteRonda);
             for (int i=0;i<jugador.getMano().size();i++){
@@ -97,6 +102,8 @@ public class Partida implements Serializable {
 
 
 
+
+
     public void nuevaRonda() {
         puntosJugadorRonda = 0;
         puntosAgenteRonda = 0;
@@ -104,6 +111,8 @@ public class Partida implements Serializable {
         mazo.barajar();
         mazo.repartirCartas(jugador, agente);
         ActualizarPuntos(jugador, agente);
+        agente.setAsRival(jugador.hasAs());
+        jugador.setAsRival(agente.hasAs());
         agente.setPuntos2(puntosJugadorRonda);
         jugador.setPuntos2(puntosAgenteRonda);
 

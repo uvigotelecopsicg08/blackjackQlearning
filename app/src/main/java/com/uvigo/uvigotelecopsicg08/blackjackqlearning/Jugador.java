@@ -12,6 +12,7 @@ public class Jugador {
     private int puntos2 = 0;
     private ArrayList<Carta> mano = new ArrayList<Carta>();
     private boolean as = false; //boolean que indica si el jugador tiene as
+    private boolean asRival = false; //boolean que indica si el jugador tiene as
     private boolean plantado = false; //boolean que indica si el jugador está plantado
     private int ManoRival;
 
@@ -95,6 +96,13 @@ public class Jugador {
     public void añadirCarta(Carta carta, boolean visible) {
         carta.setVisible(visible);
         mano.add(carta);
+    }
+    public boolean hasAsRival() {
+        return asRival;
+    }
+
+    public void setAsRival(boolean as) {
+        asRival = as;
     }
 
     public void pedirCarta(Mazo mazo) {

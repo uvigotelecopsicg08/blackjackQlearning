@@ -506,7 +506,7 @@ public class play_screen extends AppCompatActivity {
                 System.out.println("Esta pulsado facil");
             }
             else{
-                partida.setEpsilon(0);
+                partida.setEpsilon(0.10);
                 System.out.println("no esta pulsado facil");
             }
 

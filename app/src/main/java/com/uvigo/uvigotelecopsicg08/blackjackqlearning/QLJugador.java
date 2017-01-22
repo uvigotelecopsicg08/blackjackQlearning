@@ -16,11 +16,11 @@ public class QLJugador extends Jugador implements Serializable {
 double gamma=0.75;
 double epsilon=0.5;*/
     static final long serialVersionUID= 1;
-    double alpha=0.9 ;  //Valores del Codigo
-    double gamma=0.8;
-    double epsilon=0.3;
+    double alpha=0.6 ;  //Valores del Codigo
+    double gamma=0.75;
+    double epsilon=0.2;
 
-    final double dMINLearnRate = 0.05;
+    final double dMINLearnRate = 0.4;
     final double dDecFactorLR = 0.99;
     double dQmax;
     Vector<EstadoAccion> vEstadosAcciones = new Vector<EstadoAccion>();
@@ -43,7 +43,16 @@ double epsilon=0.5;*/
 
     public boolean HacerJugada(Mazo mazo){
         hit =getManoRival()-2;
-        vGetNewActionQLearning();
+
+        if (getPuntos1()<=11){
+            iNewAction = 0;
+        } else {
+            if (getPuntos2()>getPuntos1()&&getManoRival()==2)
+                iNewAction = 0;
+            else {
+                vGetNewActionQLearning();
+            }
+        }
         if (iNewAction==0) {
             pedirCarta(mazo);
             return true;
@@ -70,7 +79,7 @@ double epsilon=0.5;*/
         }
         // If we didn't find it, then we add it
         if (!bFound) {
-            EstadoAccionActual = new EstadoAccion (getPuntos1(), getPuntos2());
+            EstadoAccionActual = new EstadoAccion (getPuntos1(), getPuntos2(),getManoRival(),hasAs(),hasAsRival());
             vEstadosAcciones.add (EstadoAccionActual);
         }
 
@@ -102,8 +111,8 @@ double epsilon=0.5;*/
 
         EstadoAccionAnterior = EstadoAccionActual;				// Updating values for the next time
         AccionAnterior=iNewAction;
-        //	  alpha *= dDecFactorLR;						// Reducing the learning rate
-        //  if (alpha < dMINLearnRate) alpha = dMINLearnRate;
+        alpha *= dDecFactorLR;						// Reducing the learning rate
+        if (alpha < dMINLearnRate) alpha = dMINLearnRate;
 
 
 
@@ -112,7 +121,7 @@ double epsilon=0.5;*/
 
     //Ajustar Valores Q(s,a)
     public void Refuerzo(int R){
-        if (EstadoAccionAnterior != null) {
+        if (EstadoAccionAnterior != null && getPuntos1()>11) {
             EstadoAccionAnterior.dValAction[AccionAnterior] +=  alpha * (R + gamma * dQmax - EstadoAccionAnterior.dValAction[AccionAnterior]);
         }
 		/*	alpha *= dDecFactorLR;						// Reducing the learning rate
